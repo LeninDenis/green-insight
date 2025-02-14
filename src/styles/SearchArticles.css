@@ -1,0 +1,27 @@
+.search-articles {
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  .search-articles input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .results-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .results-list li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--card-border);
+  }
+  

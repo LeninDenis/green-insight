@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --header-bg: #2e8b57;
+  --header-text: #ffffff;
+  --modal-bg: white;
+  --modal-text: black;
+  --button-bg: #3cb371;
+  --button-text: white;
+  --button-border: none;
+  --button-hover-bg: #2e8b57;
+  --card-border: #ccc;
+  --footer-bg: #2e8b57;
+  --footer-text: white;
+  --footer-link-color: white;
+  --footer-link-hover-color: #f0f0f0;
+}
+
+body.dark-mode {
+  --bg-color: #292929;
+  --text-color: #e0e0e0;
+  --header-bg: #383838;
+  --header-text: #e0e0e0;
+  --modal-bg: #333;
+  --modal-text: #ddd;
+  --button-bg: #444;
+  --button-text: #ddd;
+  --button-border: #666;
+  --button-hover-bg: #555;
+  --card-border: #555;
+  --footer-bg: #383838;
+  --footer-text: #ddd;
+  --footer-link-color: #ddd;
+  --footer-link-hover-color: #bbb;
+}
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: var(--button-border);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.modal {
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal input,
+.modal button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: var(--button-border);
+  border-radius: 5px;
+}
+
+.modal input {
+  border: 1px solid var(--button-border);
+  background-color: transparent;
+}
+
+.modal input:focus {
+  outline: none;
+  border: 1px solid var(--button-hover-bg);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

@@ -1,0 +1,113 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--header-bg);
+  padding: 1rem 2rem;
+  color: var(--header-text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav a {
+  margin: 0 1rem;
+  color: var(--header-text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .register-btn {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-buttons .login-btn:hover,
+.auth-buttons .register-btn:hover {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+.theme-toggle button {
+  background-color: transparent;
+  border: none;
+  color: var(--header-text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.theme-toggle button:hover {
+  opacity: 0.8;
+}
+
+.language-selector {
+  position: relative;
+}
+
+.current-language-btn {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.current-language-btn:hover {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+.language-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--bg-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000;
+  transition: background-color 0.3s;
+}
+
+.language-menu button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.language-menu button:hover {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+.language-menu button:active {
+  background-color: var(--header-bg);
+}
+
+body {
+  transition: background-color 0.3s, color 0.3s;
+}

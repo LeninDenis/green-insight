@@ -1,0 +1,14 @@
+.page {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+  }
+  
+  .page p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+  }
+  
