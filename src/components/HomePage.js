@@ -17,7 +17,6 @@ function ArticleCard({ image, title, description, author, link }) {
 }
 
 const HomePage = () => {
-  // Состояние для хранения списка статей и поискового запроса
   const [searchQuery, setSearchQuery] = useState('');
 
   const articles = [
@@ -50,7 +49,6 @@ const HomePage = () => {
     },
   ];
 
-  // Фильтрация статей по названию
   const filteredArticles = articles.filter((article) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -59,7 +57,6 @@ const HomePage = () => {
     <div className="homepage">
       <h1>Главная страница</h1>
       
-      {/* Поле ввода для поиска */}
       <input
         type="text"
         placeholder="Поиск статей..."
@@ -68,7 +65,6 @@ const HomePage = () => {
         className="search-input"
       />
       
-      {/* Сетка статей */}
       <div className="articles-grid">
         {filteredArticles.map((article) => (
           <ArticleCard

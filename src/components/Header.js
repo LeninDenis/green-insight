@@ -4,6 +4,7 @@ import logo from '../assets/logo/logo.png';
 import AuthModal from './AuthModal';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 function Header() {
   const { t, i18n } = useTranslation();
@@ -51,8 +52,8 @@ function Header() {
         </button>
       </div>
       <div className="theme-toggle">
-        <button onClick={toggleTheme}>
-          {isDarkMode ? t('light_mode') : t('dark_mode')}
+        <button onClick={toggleTheme} className="theme-button">
+          {isDarkMode ? <FaSun /> : <FaMoon />}
         </button>
       </div>
       <div className="language-selector">
