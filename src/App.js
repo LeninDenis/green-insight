@@ -9,6 +9,7 @@ import RecommendedPage from './components/RecommendedPage';
 import NewsPage from './components/NewsPage';
 import AboutPage from './components/AboutPage';
 import ContactsPage from './components/ContactsPage';
+import ProfilePage from './components/ProfilePage';
 import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/news" element={<NewsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Routes>
           </main>
           <Footer />
