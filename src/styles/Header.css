@@ -1,11 +1,20 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: var(--header-bg);
   padding: 1rem 2rem;
   color: var(--header-text);
   transition: background-color 0.3s, color 0.3s;
+}
+
+.header .logo {
+  margin-right: 1.5rem;
+}
+
+.nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .nav a {
@@ -19,9 +28,13 @@
   text-decoration: underline;
 }
 
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .auth-buttons .login-btn,
 .auth-buttons .register-btn {
-  margin-left: 1rem;
   padding: 0.5rem 1rem;
   background-color: var(--button-bg);
   color: var(--button-text);
@@ -43,6 +56,10 @@
   object-fit: contain;
 }
 
+.theme-toggle {
+  margin-left: 1rem;
+}
+
 .theme-toggle button {
   background-color: transparent;
   border: none;
@@ -53,11 +70,12 @@
 }
 
 .theme-toggle button:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .language-selector {
   position: relative;
+  margin-left: 1rem;
 }
 
 .current-language-btn {
