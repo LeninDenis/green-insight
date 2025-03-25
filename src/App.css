@@ -1,4 +1,3 @@
-/* Основной стиль для body */
 body {
   margin: 0;
   padding: 0;
@@ -15,7 +14,6 @@ a {
   text-decoration: none;
 }
 
-/* Стили для страниц */
 .page {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -35,7 +33,6 @@ a {
   background-color: var(--card-hover-bg);
 }
 
-/* Стили для темной темы */
 body.dark-mode {
   --bg-color: #292929;
   --text-color: #e0e0e0;
@@ -47,16 +44,15 @@ body.dark-mode {
   --button-text: #ddd;
   --button-border: #666;
   --button-hover-bg: #555;
-  --card-bg: #444; /* Добавим фон для карточек в темной теме */
+  --card-bg: #444;
   --card-border: #555;
-  --card-hover-bg: #555; /* Подсветка при наведении */
+  --card-hover-bg: #555;
   --footer-bg: #383838;
   --footer-text: #ddd;
   --footer-link-color: #ddd;
   --footer-link-hover-color: #bbb;
 }
 
-/* Стили для страниц в темной теме */
 body.dark-mode .page {
   background-color: var(--bg-color);
   color: var(--text-color);

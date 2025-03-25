@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 import logo from '../assets/logo/logo.png';
-import AuthModal from './AuthModal';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-function Header() {
+function Header({ onLogin, onRegister }) {
   const { t, i18n } = useTranslation();
   const { isDarkMode, toggleTheme } = useTheme();
+  const { user, logout } = useAuth();
+
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
 
   const changeLanguage = (lang) => {
@@ -16,40 +19,40 @@ function Header() {
     setLanguageMenuOpen(false);
   };
 
-  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-  const [isRegisterMode, setRegisterMode] = useState(false);
-
-  const openLogin = () => {
-    setRegisterMode(false);
-    setAuthModalOpen(true);
-  };
-
-  const openRegister = () => {
-    setRegisterMode(true);
-    setAuthModalOpen(true);
-  };
-
-  const closeModal = () => setAuthModalOpen(false);
-
   return (
     <header className={`header ${isDarkMode ? 'dark' : ''}`}>
       <div className="logo">
-        <img src={logo} alt="Green Insight" />
+        <Link to="/">
+          <img src={logo} alt="Green Insight" />
+        </Link>
       </div>
       <nav className="nav">
-        <a href="/">{t('home')}</a>
-        <a href="/themes">{t('themes')}</a>
-        <a href="/trends">{t('trends')}</a>
-        <a href="/recommended">{t('recommended')}</a>
-        <a href="/news">{t('news')}</a>
+        <Link to="/">{t('home')}</Link>
+        <Link to="/themes">{t('themes')}</Link>
+        <Link to="/trends">{t('trends')}</Link>
+        <Link to="/recommended">{t('recommended')}</Link>
+        <Link to="/news">{t('news')}</Link>
       </nav>
       <div className="auth-buttons">
-        <button className="login-btn" onClick={openLogin}>
-          {t('login')}
-        </button>
-        <button className="register-btn" onClick={openRegister}>
-          {t('register')}
-        </button>
+        {user ? (
+          <>
+            <Link to="/profile" className="profile-btn">
+              {t('profile')}
+            </Link>
+            <button className="logout-btn" onClick={logout}>
+              {t('logout')}
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="login-btn" onClick={onLogin}>
+              {t('login')}
+            </button>
+            <button className="register-btn" onClick={onRegister}>
+              {t('register')}
+            </button>
+          </>
+        )}
       </div>
       <div className="theme-toggle">
         <button onClick={toggleTheme} className="theme-button">
@@ -71,11 +74,6 @@ function Header() {
           </div>
         )}
       </div>
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={closeModal}
-        isRegister={isRegisterMode}
-      />
     </header>
   );
 }
