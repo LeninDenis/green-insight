@@ -4,7 +4,8 @@ import '../styles/RegisterForm.css';
 
 const RegisterForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    name: "",
+    fname: "",
+    lname: "",
     email: "",
     password: "",
   });
@@ -16,20 +17,10 @@ const RegisterForm = ({ onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("Registration initiated");
     e.preventDefault();
-    
-    if (!register) {
-      console.error("Ошибка: register не определён в useAuth()");
-      return;
-    }
-
-    try {
-      await register(formData);
-      console.log("Пользователь зарегистрирован:", formData);
-      onClose();
-    } catch (error) {
-      console.error("Ошибка регистрации:", error);
-    }
+    await register(formData);
+    window.location.reload();
   };
 
   return (
@@ -37,14 +28,25 @@ const RegisterForm = ({ onClose }) => {
       <form onSubmit={handleSubmit} className="register-form">
         <button type="button" className="close-btn" onClick={onClose}>&times;</button>
         <div className="form-group">
-          <label htmlFor="name">Имя</label>
+          <label htmlFor="fname">Имя</label>
           <input 
             type="text" 
-            name="name" 
+            name="fname"
             placeholder="Введите ваше имя" 
-            value={formData.name} 
+            value={formData.fname}
             onChange={handleChange} 
             required 
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lname">Фамилия</label>
+          <input
+              type="text"
+              name="lname"
+              placeholder="Введите вашу фамилию"
+              value={formData.lname}
+              onChange={handleChange}
+              required
           />
         </div>
         <div className="form-group">

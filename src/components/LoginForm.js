@@ -14,6 +14,7 @@ const LoginForm = ({ onClose }) => {
     console.log("Login initiated");
     e.preventDefault();
     await login(credentials);
+    window.location.reload();
   };
 
   return (
