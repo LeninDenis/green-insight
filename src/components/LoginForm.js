@@ -11,6 +11,7 @@ const LoginForm = ({ onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("Login initiated");
     e.preventDefault();
     await login(credentials);
   };
