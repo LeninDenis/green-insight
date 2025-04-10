@@ -9,6 +9,7 @@ import RecommendedPage from './components/RecommendedPage';
 import NewsPage from './components/NewsPage';
 import AboutPage from './components/AboutPage';
 import ContactsPage from './components/ContactsPage';
+import SupportPage from './components/SupportPage';
 import ProfilePage from './components/ProfilePage';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
@@ -24,13 +25,13 @@ function App() {
     <AuthProvider>
       <ThemeProvider>
         <Router>
-          <div className="App">
+          <div className="app-container">
             <Header 
               onLogin={() => setShowLogin(true)} 
               onRegister={() => setShowRegister(true)} 
             />
-            
-            <main>
+
+            <main className="main-content">
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/themes" element={<ThemesPage />} />
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/news" element={<NewsPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contacts" element={<ContactsPage />} />
+                <Route path="/support" element={<SupportPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Routes>
             </main>

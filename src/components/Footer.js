@@ -6,7 +6,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-links">
         <a href="/about">О нас</a>
-        <a href="/contact">Контакты</a>
+        <a href="/contacts">Контакты</a>
         <a href="/support">Поддержка</a>
       </div>
     </footer>
