@@ -29,9 +29,7 @@ function Header({ onLogin, onRegister }) {
       <nav className="nav">
         <Link to="/">{t('home')}</Link>
         <Link to="/themes">{t('themes')}</Link>
-        <Link to="/trends">{t('trends')}</Link>
         <Link to="/recommended">{t('recommended')}</Link>
-        <Link to="/news">{t('news')}</Link>
       </nav>
       <div className="auth-buttons">
         {user ? (

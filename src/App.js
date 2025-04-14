@@ -4,9 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
 import ThemesPage from './components/ThemesPage';
-import TrendsPage from './components/TrendsPage';
 import RecommendedPage from './components/RecommendedPage';
-import NewsPage from './components/NewsPage';
 import AboutPage from './components/AboutPage';
 import ContactsPage from './components/ContactsPage';
 import SupportPage from './components/SupportPage';
@@ -35,9 +33,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/themes" element={<ThemesPage />} />
-                <Route path="/trends" element={<TrendsPage />} />
                 <Route path="/recommended" element={<RecommendedPage />} />
-                <Route path="/news" element={<NewsPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contacts" element={<ContactsPage />} />
                 <Route path="/support" element={<SupportPage />} />
