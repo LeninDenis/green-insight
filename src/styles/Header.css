@@ -30,11 +30,26 @@
 
 .auth-buttons {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-buttons button {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .auth-buttons .login-btn,
-.auth-buttons .register-btn {
+.auth-buttons .register-btn,
+.auth-buttons .profile-btn {
   padding: 0.5rem 1rem;
   background-color: var(--button-bg);
   color: var(--button-text);
@@ -45,9 +60,20 @@
 }
 
 .auth-buttons .login-btn:hover,
-.auth-buttons .register-btn:hover {
+.auth-buttons .register-btn:hover,
+.auth-buttons .profile-btn:hover {
   background-color: var(--header-bg);
   color: var(--header-text);
+}
+
+.auth-buttons .logout-btn {
+  background-color: red;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.auth-buttons .logout-btn:hover {
+  background-color: darkred;
 }
 
 .logo img {
