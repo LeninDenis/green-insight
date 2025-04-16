@@ -37,7 +37,7 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contacts" element={<ContactsPage />} />
                 <Route path="/support" element={<SupportPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/user/:id" element={<ProfilePage />} />
               </Routes>
             </main>
 

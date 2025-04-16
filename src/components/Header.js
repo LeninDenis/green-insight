@@ -34,7 +34,7 @@ function Header({ onLogin, onRegister }) {
       <div className="auth-buttons">
         {user ? (
           <>
-            <Link to="/profile" className="profile-btn">
+            <Link to={"/user/"+user.id} className="profile-btn">
               {t('profile')}
             </Link>
             <button className="logout-btn" onClick={logout}>
