@@ -30,6 +30,9 @@ const ProfilePage = () => {
                   setArticles(arts.data);
               }
           }
+      } catch (e) {
+          console.log(e);
+          setArticles([]);
       } finally {
           setLoading(false);
       }
