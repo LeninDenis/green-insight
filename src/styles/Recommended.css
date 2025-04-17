@@ -1,14 +1,45 @@
-.page {
-    padding: 20px;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    color: var(--text-color);
-  }
-  
-  .page p {
-    font-size: 1.2rem;
-    color: var(--text-color);
-  }
-  
+.recommended-page {
+  text-align: center;
+  padding: 2rem;
+}
+
+.recommended-page h1 {
+  margin-bottom: 1rem;
+}
+
+.recommended-page p {
+  margin-bottom: 2rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.articles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.suggest-theme-btn {
+  margin-top: 20px;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.suggest-theme-btn:hover {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}

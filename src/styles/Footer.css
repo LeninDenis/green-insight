@@ -1,14 +1,33 @@
 .footer {
   background-color: var(--footer-bg);
-  padding: 1rem 2rem;
   color: var(--footer-text);
-  text-align: center;
+  padding: 1.5rem 2rem;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .footer-links a {
   color: var(--footer-link-color);
-  margin: 0 1rem;
-  text-decoration: none;
+  font-size: 1rem;
   transition: color 0.3s;
 }
 

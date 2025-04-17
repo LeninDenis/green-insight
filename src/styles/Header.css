@@ -1,157 +1,132 @@
 .header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: var(--header-bg);
-  padding: 1rem 2rem;
   color: var(--header-text);
-  transition: background-color 0.3s, color 0.3s;
+  padding: 0.8rem 2rem;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.header .logo {
-  margin-right: 1.5rem;
+.header-left {
+  flex: 1;
+}
+
+.logo img {
+  height: 100px;
+  border-radius:30px;
+  transition: transform 0.3s;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
 }
 
 .nav {
-  flex-grow: 1;
+  flex: 3.1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  gap: 2rem;
 }
 
 .nav a {
-  margin: 0 1rem;
+  font-weight: 500;
   color: var(--header-text);
-  text-decoration: none;
   transition: color 0.3s;
+  font-size: 1rem;
 }
 
 .nav a:hover {
-  text-decoration: underline;
+  color: var(--footer-link-hover-color);
+}
+
+.header-right {
+  flex: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
 }
 
 .auth-buttons {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
-  margin: 0;
-  padding: 0;
 }
 
-.auth-buttons button {
-  margin: 0;
-  padding: 0.5rem 1rem;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  cursor: pointer;
-  border-radius: 20px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.auth-buttons .login-btn,
-.auth-buttons .register-btn,
+.auth-buttons button,
 .auth-buttons .profile-btn {
-  padding: 0.5rem 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: var(--button-border);
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.auth-buttons button:hover,
+.auth-buttons .profile-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.theme-toggle .theme-button {
   background-color: var(--button-bg);
   color: var(--button-text);
   border: none;
-  cursor: pointer;
-  border-radius: 20px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.auth-buttons .login-btn:hover,
-.auth-buttons .register-btn:hover,
-.auth-buttons .profile-btn:hover {
-  background-color: var(--header-bg);
-  color: var(--header-text);
-}
-
-.auth-buttons .logout-btn {
-  background-color: red;
-  color: white;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.auth-buttons .logout-btn:hover {
-  background-color: darkred;
-}
-
-.logo img {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-}
-
-.theme-toggle {
-  margin-left: 1rem;
-}
-
-.theme-toggle button {
-  background-color: transparent;
-  border: none;
-  color: var(--header-text);
+  padding: 0.4rem 0.7rem;
+  border-radius: 50%;
   font-size: 1rem;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: background-color 0.3s;
 }
 
-.theme-toggle button:hover {
-  opacity: 0.7;
+.theme-toggle .theme-button:hover {
+  background-color: var(--button-hover-bg);
 }
 
 .language-selector {
   position: relative;
-  margin-left: 1rem;
 }
 
 .current-language-btn {
   background-color: var(--button-bg);
   color: var(--button-text);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  border: var(--button-border);
+  padding: 0.4rem 0.7rem;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .current-language-btn:hover {
-  background-color: var(--header-bg);
-  color: var(--header-text);
+  background-color: var(--button-hover-bg);
 }
 
 .language-menu {
   position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: var(--bg-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  right: 0;
+  top: 2.5rem;
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  z-index: 1000;
-  transition: background-color 0.3s;
+  z-index: 100;
 }
 
 .language-menu button {
-  display: block;
-  width: 100%;
-  background-color: transparent;
+  background: none;
   border: none;
   padding: 0.5rem 1rem;
+  width: 100%;
   text-align: left;
-  color: var(--text-color);
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  color: var(--modal-text);
+  transition: background-color 0.3s;
 }
 
 .language-menu button:hover {
-  background-color: var(--button-bg);
+  background-color: var(--button-hover-bg);
   color: var(--button-text);
-}
-
-.language-menu button:active {
-  background-color: var(--header-bg);
-}
-
-body {
-  transition: background-color 0.3s, color 0.3s;
 }

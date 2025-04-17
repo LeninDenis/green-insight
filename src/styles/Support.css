@@ -1,38 +1,90 @@
 .support-page {
-    padding: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    max-width: 900px;
-    margin: 0 auto;
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    box-sizing: border-box;
-  }
-  
-  .support-page h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5rem;
-  }
-  
-  .support-page p {
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-  
-  .support-page ul {
-    margin-top: 20px;
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .support-page ul li {
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-  }
-  
-  .support-page ul li::before {
-    content: '🔹';
-    margin-right: 10px;
-    color: var(--highlight-color);
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.support-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.support-page p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.support-page strong {
+  font-weight: bold;
+}
+
+.support-page h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-align: left;
+  width: 100%;
+  text-align: center;
+}
+
+.support-page .faq-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.support-page .faq-item {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  width: calc(33% - 1rem);
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.support-page .faq-item:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.support-page .faq-item p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+body.dark-mode .support-page {
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+}
+
+body.dark-mode .support-page h1 {
+  color: var(--header-text);
+}
+
+body.dark-mode .support-page p,
+body.dark-mode .support-page h2,
+body.dark-mode .support-page .faq-item p {
+  color: var(--modal-text);
+}
+
+body.dark-mode .support-page .faq-item {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+}
+
+body.dark-mode .support-page .faq-item:hover {
+  background-color: var(--card-hover-bg);
+}

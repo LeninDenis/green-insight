@@ -1,9 +1,12 @@
 import React from 'react';
 import '../styles/AboutUs.css';
+import { useTheme } from '../context/ThemeContext';
 
 const AboutUs = () => {
+  const { isDarkMode } = useTheme();
+
   return (
-    <div className="aboutus-page">
+    <div className={`aboutus-page ${isDarkMode ? 'dark' : ''}`}>
       <h1>О нас</h1>
       <p>
         <strong>Green Insight</strong> — это онлайн-агрегатор научно-популярных статей об экологии, созданный с целью
