@@ -13,6 +13,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
+import CreateArticlePage from './components/CreateArticlePage';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/contacts" element={<ContactsPage />} />
                 <Route path="/support" element={<SupportPage />} />
                 <Route path="/user/:id" element={<ProfilePage />} />
+                <Route path="/create-article" element={<CreateArticlePage />} />
               </Routes>
             </main>
 
