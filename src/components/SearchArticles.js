@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import articles from '../data/articlesData';
 import '../styles/SearchArticles.css';
 
 const SearchArticles = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   const handleSearch = (e) => {
     setQuery(e.target.value);

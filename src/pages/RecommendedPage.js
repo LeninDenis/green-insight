@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Recommended.css';
-import ArticleCard from './ArticleCard';
+import ArticleCard from '../components/ArticleCard';
 
 const Recommended = () => {
   const [recommendedArticles, setRecommendedArticles] = useState([]);

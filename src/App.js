@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './components/HomePage';
-import ThemesPage from './components/ThemesPage';
-import RecommendedPage from './components/RecommendedPage';
-import AboutPage from './components/AboutPage';
-import ContactsPage from './components/ContactsPage';
-import SupportPage from './components/SupportPage';
-import ProfilePage from './components/ProfilePage';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+import HomePage from './pages/HomePage';
+import ThemesPage from './pages/ThemesPage';
+import RecommendedPage from './pages/RecommendedPage';
+import AboutPage from './pages/AboutPage';
+import ContactsPage from './pages/ContactsPage';
+import SupportPage from './pages/SupportPage';
+import ProfilePage from './pages/ProfilePage';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
-import CreateArticlePage from './components/CreateArticlePage';
+import CreateArticlePage from './pages/CreateArticlePage';
 import './App.css';
 
 function App() {

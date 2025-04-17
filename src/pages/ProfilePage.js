@@ -5,7 +5,7 @@ import SubscriptionsModal from '../components/SubscriptionsModal';
 import {Link, useParams} from "react-router-dom";
 import UserService from "../api/UserService";
 import {useAuth} from "../context/AuthContext";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
 import ArticleService from "../api/ArticleService";
 
 const ProfilePage = () => {

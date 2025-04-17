@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../styles/HomePage.css';
-import ArticleCard from "./ArticleCard";
+import ArticleCard from "../components/ArticleCard";
 import ArticleService from "../api/ArticleService";
-import Loader from "./Loader";
+import Loader from "../components/Loader";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
