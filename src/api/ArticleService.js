@@ -15,4 +15,9 @@ export default class ArticleService{
         const response = await authAxios.get('/platform/protected/article?creator='+id);
         return response;
     }
+
+    static async create(data){
+        const response = await authAxios.post('/platform/protected/article', data, null);
+        return response;
+    }
 }

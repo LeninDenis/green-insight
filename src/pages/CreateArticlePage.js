@@ -1,70 +1,121 @@
-import React, { useState } from 'react';
-import TopicSelector from '../components/TopicSelector';
-import ErrorPopup from '../components/ErrorPopup';
-import '../styles/ArticlePublishForm.css';
+import React, {useEffect, useState} from 'react';
+import ErrorPopup from '../components/UI/ErrorPopup';
+import '../styles/pages/CreateArticlePage.css';
+import Selector from "../components/UI/Selector";
+import CategoryService from "../api/CategoryService";
+import Loader from "../components/UI/Loader";
+import MDEditor from "@uiw/react-md-editor";
+import ArticleService from "../api/ArticleService";
+import {useNavigate} from "react-router-dom";
 
 const CreateArticlePage = () => {
-  const [title, setTitle] = useState('');
-  const [selectedTopics, setSelectedTopics] = useState([]);
-  const [annotation, setAnnotation] = useState('');
+  const navigate = useNavigate();
+  const [articleForm, setArticleForm] = useState({
+      title: '',
+      category: '',
+      annotation: '',
+      content: ''
+  });
+  const [categories, setCategories] = useState([]);
+  const [choose, setChoose] = useState(null);
   const [content, setContent] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const canPublishPaid = false; // заглушка
 
-  const handleSubmit = (isPaid) => {
-    if (isPaid && !canPublishPaid) {
+  const fetchData = async () => {
+      try{
+          const cats = await CategoryService.getCategories();
+          if(cats.status === 200){
+              setCategories(cats.data);
+          } else {
+              setErrorData(cats.status, cats.data.message);
+          }
+      } catch (e) {
+          setErrorData(500, 'Неизвестная ошибка...');
+      } finally {
+          setLoading(false);
+      }
+  }
+
+  useEffect(() => {
+      fetchData();
+  }, []);
+
+  const handleForm = (type, value) => {
+    setArticleForm({
+        ...articleForm,
+        [type]: value
+    });
+  };
+
+  const setErrorData = (status, message) => {
       setError({
-        status: 403,
-        message: 'Для платной публикации необходима специальная подписка.',
+          status: status,
+          message: message
       });
-      return;
+  };
+
+  const handleSubmit = async (isPaid) => {
+    try{
+        if (isPaid && !canPublishPaid) {
+            setErrorData(403, 'Для платной публикации необходима специальная подписка.');
+        } else {
+            if(!choose) {
+                setErrorData(404, 'Необходимо выбрать тему!');
+            } else {
+                const newArticle = {
+                    ...articleForm,
+                    category: choose.id,
+                    content: content
+                };
+                console.log('Публикация статьи:', newArticle);
+                const response = await ArticleService.create(newArticle);
+                if(response.status === 201){
+                    navigate("/");
+                } else {
+                    setErrorData(response.status, response.data.message);
+                }
+            }
+        }
+    } catch (e){
+        setErrorData(500, 'Неизвестная ошибка...');
     }
-
-    const articleData = {
-      title,
-      topicId: selectedTopics[0],
-      annotation,
-      content,
-      isPaid,
-    };
-
-    console.log('Публикация статьи:', articleData);
   };
 
   const handleErrorClose = () => {
-    setError(null);
+      setError(null);
   };
 
-  return (
+  return loading ? (<Loader />) : (
     <div className="publish-form">
       <h2>Создание статьи</h2>
 
       <label>Название статьи</label>
       <input
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={articleForm.title}
+        onChange={(e) => handleForm('title', e.target.value)}
         placeholder="Введите заголовок"
       />
 
-      <TopicSelector selectedTopics={selectedTopics} onChange={setSelectedTopics} />
+      <Selector options={categories} defaultValue={'Выберите тему'} value={choose} onChange={setChoose}/>
 
       <label>Аннотация</label>
-      <textarea
-        value={annotation}
-        onChange={(e) => setAnnotation(e.target.value)}
+      <textarea className='annotation-text'
+        value={articleForm.annotation}
+        onChange={(e) => handleForm('annotation', e.target.value)}
         placeholder="Краткое описание статьи"
         rows={3}
       />
 
       <label>Контент статьи</label>
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Основной текст статьи"
-        rows={10}
+      <MDEditor
+          value={content}
+          onChange={setContent}
       />
+
 
       <div className="publish-buttons">
         <button onClick={() => handleSubmit(false)}>Публикация</button>

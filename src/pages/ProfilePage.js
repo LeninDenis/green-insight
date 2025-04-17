@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import '../styles/ProfilePage.css';
+import '../styles/pages/ProfilePage.css';
 import defaultAvatar from '../assets/avatar/default-avatar.jpg';
 import SubscriptionsModal from '../components/SubscriptionsModal';
 import {Link, useParams} from "react-router-dom";
 import UserService from "../api/UserService";
 import {useAuth} from "../context/AuthContext";
-import Loader from "../components/Loader";
+import Loader from "../components/UI/Loader";
 import ArticleService from "../api/ArticleService";
 
 const ProfilePage = () => {
@@ -25,7 +25,12 @@ const ProfilePage = () => {
           if(response.status === 200){
               setCurrentUser(response.data);
               setStatus(response.data.role);
-              let arts = await ArticleService.getArticlesByUIdProtected(id);
+              let arts;
+              if(user.role === 'ADMIN') {
+                  arts = await ArticleService.getArticlesByUIdProtected(id);
+              } else {
+                  arts = await ArticleService.getArticlesByUId(id);
+              }
               if(arts.status === 200){
                   setArticles(arts.data);
               }
@@ -38,8 +43,10 @@ const ProfilePage = () => {
       }
   }
   useEffect(() => {
-    fetchData(params.id);
-  }, []);
+    if(user) {
+        fetchData(params.id);
+    }
+  }, [user]);
 
   const handleBecomeAuthor = () => {
     alert('Заявка на статус автора отправлена!');

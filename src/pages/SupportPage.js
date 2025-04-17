@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Support.css';
+import '../styles/pages/SupportPage.css';
 
 const SupportPage = () => {
   return (

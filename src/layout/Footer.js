@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Footer.css';
+import '../styles/layout/Footer.css';
 import { useTheme } from '../context/ThemeContext';
 
 function Footer() {

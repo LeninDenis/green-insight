@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Themes.css';
+import '../styles/pages/ThemesPage.css';
 
 const themes = [
   { id: 1, title: 'Климат и окружающая среда', description: 'Изучение изменений климата, экологии и влияния человека на природу.' },

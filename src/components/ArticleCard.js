@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import '../styles/HomePage.css';
+import '../styles/pages/HomePage.css';
 
 const ArticleCard = ({article, image}) => {
     const date = new Date(article.creationDate);

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/AboutUs.css';
+import '../styles/pages/AboutPage.css';
 import { useTheme } from '../context/ThemeContext';
 
 const AboutUs = () => {

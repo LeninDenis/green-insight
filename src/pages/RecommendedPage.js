@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/Recommended.css';
+import '../styles/pages/RecommendedPage.css';
 import ArticleCard from '../components/ArticleCard';
 
 const Recommended = () => {

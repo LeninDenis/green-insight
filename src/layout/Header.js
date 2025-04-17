@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/Header.css';
+import '../styles/layout/Header.css';
 import logo from '../assets/logo/logo.png';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
