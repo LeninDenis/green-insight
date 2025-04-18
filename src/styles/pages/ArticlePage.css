@@ -1,0 +1,21 @@
+.article-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .annotation {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .content {
+    margin-top: 1.5rem;
+  }
+  
+  .wmde-markdown {
+    line-height: 1.6;
+  }
+  

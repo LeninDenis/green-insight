@@ -85,3 +85,22 @@
 .logout-btn:hover {
   background-color: var(--error-hover-bg);
 }
+
+.create-article-wrapper {
+  margin: 10px 0;
+}
+
+.create-article-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: var(--accent-color, #4caf50);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.create-article-btn:hover {
+  background-color: #388e3c;
+}
