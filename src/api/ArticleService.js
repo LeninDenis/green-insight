@@ -6,6 +6,16 @@ export default class ArticleService{
         return response;
     }
 
+    static async getArticleById(id){
+        const response = await baseAxios.get('/platform/public/article/'+id);
+        return response;
+    }
+
+    static async getArticleByIdProtected(id){
+        const response = await authAxios.get('/platform/protected/article/'+id);
+        return response;
+    }
+
     static async getArticlesByUId(id){
         const response = await baseAxios.get('/platform/public/article?creator='+id);
         return response;
@@ -18,6 +28,16 @@ export default class ArticleService{
 
     static async create(data){
         const response = await authAxios.post('/platform/protected/article', data, null);
+        return response;
+    }
+
+    static async interact(id, like, view, rating) {
+        const params = new URLSearchParams();
+        if (like !== null) params.append('like', like);
+        if (view !== null) params.append('view', view);
+        if (rating !== null) params.append('rating', rating);
+
+        const response = await authAxios.post(`/platform/protected/interact/${id}?${params.toString()}`);
         return response;
     }
 }

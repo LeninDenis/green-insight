@@ -85,3 +85,122 @@ body.dark-mode .page .card {
 body.dark-mode .page .card:hover {
   background-color: var(--card-hover-bg);
 }
+
+/* MDEditor стили — светлая тема */
+.content .wmde-markdown {
+  background: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 24px;
+  border-radius: 12px;
+  color: #222222;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.content .wmde-markdown h1,
+.content .wmde-markdown h2,
+.content .wmde-markdown h3 {
+  color: #1a1a1a;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.content .wmde-markdown p {
+  margin: 0.5em 0;
+}
+
+.content .wmde-markdown blockquote {
+  border-left: 4px solid #d0d0d0;
+  background: #fafafa;
+  padding: 10px 16px;
+  margin: 1em 0;
+  color: #555;
+}
+
+.content .wmde-markdown code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.content .wmde-markdown pre > code {
+  display: block;
+  background: #f4f4f4 !important;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  color: #222;
+}
+
+.wmde-markdown-var,
+.w-md-editor,
+.w-md-editor-toolbar,
+.w-md-editor-content {
+  background-color: #ffffff !important;
+  color: #222222 !important;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.w-md-editor-content textarea {
+  background: #ffffff !important;
+  color: #222222 !important;
+  border: none;
+}
+
+.w-md-editor-preview {
+  background-color: #ffffff !important;
+  color: #222222 !important;
+}
+
+/* Темная тема для markdown */
+body.dark-mode .content .wmde-markdown {
+  background: var(--card-bg) !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--text-color);
+}
+
+body.dark-mode .content .wmde-markdown h1,
+body.dark-mode .content .wmde-markdown h2,
+body.dark-mode .content .wmde-markdown h3 {
+  color: var(--text-color);
+}
+
+body.dark-mode .content .wmde-markdown blockquote {
+  border-left: 4px solid var(--card-border);
+  background: #333;
+  color: #ccc;
+}
+
+body.dark-mode .content .wmde-markdown code {
+  background: #222;
+  color: #eee;
+}
+
+body.dark-mode .content .wmde-markdown pre > code {
+  background: #222 !important;
+  color: #eee;
+}
+
+body.dark-mode .w-md-editor,
+body.dark-mode .w-md-editor-toolbar,
+body.dark-mode .w-md-editor-content {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--card-border);
+}
+
+body.dark-mode .w-md-editor-content textarea {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: none;
+}
+
+body.dark-mode .w-md-editor-preview {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}

@@ -10,12 +10,7 @@
     color: #666;
     margin-bottom: 20px;
   }
-  
-  .content {
-    margin-top: 1.5rem;
+
+  .content{
+      margin-bottom: 1.5rem;
   }
-  
-  .wmde-markdown {
-    line-height: 1.6;
-  }
-  

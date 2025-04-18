@@ -45,4 +45,24 @@
   .arrow {
     font-size: 0.8rem;
   }
+
+body.dark-mode .dropdown-selected {
+  background: var(--card-bg, #333);
+  border: 1px solid var(--card-border, #555);
+  color: var(--text-color, #e0e0e0);
+}
+
+body.dark-mode .dropdown-options {
+  background: var(--card-bg, #333);
+  border: 1px solid var(--card-border, #555);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .dropdown-option {
+  color: var(--text-color, #e0e0e0);
+}
+
+body.dark-mode .dropdown-option:hover {
+  background-color: #444;
+}
   

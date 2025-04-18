@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     if(response.status === 200){
       let user = response.data;
       console.log(user);
-      localStorage.clear();
+      logout();
       localStorage.setItem('accessToken', user.access);
       localStorage.setItem('refreshToken', user.refresh);
       localStorage.setItem('user', JSON.stringify(user.user));
@@ -78,12 +78,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setLogged(false);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, logged, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
