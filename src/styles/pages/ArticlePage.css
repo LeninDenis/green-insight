@@ -14,3 +14,13 @@
   .content{
       margin-bottom: 1.5rem;
   }
+
+  .like-section{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+  }
+
+  .like-section div{
+
+  }

@@ -62,6 +62,14 @@ button {
   transition: background-color 0.3s, color 0.3s, border 0.3s;
 }
 
+.button{
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: var(--button-border);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+}
+
 button:hover {
   background-color: var(--button-hover-bg);
 }

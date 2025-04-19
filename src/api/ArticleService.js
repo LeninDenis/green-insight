@@ -31,6 +31,14 @@ export default class ArticleService{
         return response;
     }
 
+    static async getInteraction(userId, articleId){
+        const params = new URLSearchParams();
+        params.append('user', userId);
+        params.append('article', articleId);
+        const response = await authAxios.get(`/platform/protected/interact?${params.toString()}`);
+        return response;
+    }
+
     static async interact(id, like, view, rating) {
         const params = new URLSearchParams();
         if (like !== null) params.append('like', like);

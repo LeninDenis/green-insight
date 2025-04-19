@@ -6,7 +6,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [logged, setLogged] = useState(false);
+  const [logged, setLogged] = useState(null);
 
   useEffect(() => {
     setupInterceptors(refresh, logout);
@@ -19,9 +19,11 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(savedUser));
       } else {
         logout();
+        setLogged(false);
       }
     } else {
       logout();
+      setLogged(false);
     }
   }, []);
 
