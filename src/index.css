@@ -32,6 +32,11 @@ a {
   --footer-text: white;
   --footer-link-color: white;
   --footer-link-hover-color: #f0f0f0;
+
+  --md-editor-background-color: var(--bg-color);
+  --md-editor-text-color: var(--text-color);
+  --color-fg-default: var(--text-color);
+  --color-canvas-default: var(--bg-color);
 }
 
 body.dark-mode {

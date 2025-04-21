@@ -66,6 +66,11 @@ body.dark-mode {
   --footer-text: #ddd;
   --footer-link-color: #ddd;
   --footer-link-hover-color: #bbb;
+
+  --md-editor-background-color: var(--bg-color);
+  --md-editor-text-color: var(--text-color);
+  --color-fg-default: var(--text-color);
+  --color-canvas-default: var(--bg-color);
 }
 
 body.dark-mode .page {
@@ -86,7 +91,8 @@ body.dark-mode .page .card:hover {
   background-color: var(--card-hover-bg);
 }
 
-/* MDEditor стили — светлая тема */
+/* MDEditor */
+/* Light Theme Styles */
 .content .wmde-markdown {
   background: #ffffff !important;
   border: none !important;
@@ -138,17 +144,21 @@ body.dark-mode .page .card:hover {
 .w-md-editor,
 .w-md-editor-toolbar,
 .w-md-editor-content {
-  background-color: #ffffff !important;
-  color: #222222 !important;
+  background-color: #ffffff;
+  color: #222222;
   border: 1px solid #ddd;
   border-radius: 8px;
   transition: background-color 0.3s, color 0.3s;
 }
 
+.w-md-editor-content .wmde-markdown {
+  background-color: #ffffff;
+  color: #222222;
+}
+
 .w-md-editor-content textarea {
-  background: #ffffff !important;
-  color: #222222 !important;
-  border: none;
+  background: #ffffff;
+  color: #222222;
 }
 
 .w-md-editor-preview {
@@ -156,7 +166,19 @@ body.dark-mode .page .card:hover {
   color: #222222 !important;
 }
 
-/* Темная тема для markdown */
+.w-md-editor-text-input {
+  color: #222222 !important;
+  background-color: #ffffff !important;
+  caret-color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+}
+
+.w-md-editor-text,
+.w-md-editor-text-area {
+  color: #222222 !important;
+}
+
+/* Dark Theme Styles */
 body.dark-mode .content .wmde-markdown {
   background: var(--card-bg) !important;
   border: none !important;
@@ -194,6 +216,11 @@ body.dark-mode .w-md-editor-content {
   border: 1px solid var(--card-border);
 }
 
+body.dark-mode .w-md-editor-content .wmde-markdown {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
 body.dark-mode .w-md-editor-content textarea {
   background: var(--card-bg) !important;
   color: var(--text-color) !important;
@@ -202,5 +229,17 @@ body.dark-mode .w-md-editor-content textarea {
 
 body.dark-mode .w-md-editor-preview {
   background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .w-md-editor-text-input {
+  color: var(--text-color) !important;
+  background-color: var(--card-bg) !important;
+  caret-color: var(--text-color) !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+}
+
+body.dark-mode .w-md-editor-text,
+body.dark-mode .w-md-editor-text-area {
   color: var(--text-color) !important;
 }
