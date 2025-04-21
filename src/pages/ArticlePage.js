@@ -22,31 +22,36 @@ const ArticlePage = () => {
 
   const fetchData = async (id) => {
     setLoading(true);
-
     try {
+      // const articlePromise = user
+      //     ? ArticleService.getArticleByIdProtected(id)
+      //     : ArticleService.getArticleById(id);
+      //
+      // const interactionPromise = user
+      //     ? ArticleService.getInteraction(user.id, id)
+      //     : Promise.resolve("empty");
+      // const [art, interact] = await Promise.all([articlePromise, interactionPromise]);
       const art = user
           ? await ArticleService.getArticleByIdProtected(id)
           : await ArticleService.getArticleById(id);
-
+      const interact = user
+          ? await ArticleService.getInteraction(user.id, id)
+          : "empty";
       if(art.status === 200){
         setArticle(art.data);
         setLikes(art.data.interaction.likes);
-
-        if(user){
-          const interact = await ArticleService.getInteraction(user.id, art.data.id);
-          console.log(interact);
-          if(interact.status === 200){
-            console.log(interact.data.likes);
-            setInteraction(interact.data);
-            setLiked(interact.data.likes > 0);
-          } else if(interact.status === 404) {
-            setLiked(false)
-          }
-        } else {
-          setLiked(false);
-        }
       } else {
         setError({ status: art.status, message: art.data.message });
+      }
+      if(interact.status === 200){
+        console.log(interact.data.likes);
+        setInteraction(interact.data);
+        setLiked(interact.data.likes > 0);
+      } else if(interact.status === 404) {
+        setInteraction("empty");
+        setLiked(false);
+      } else {
+        setError({ status: interact.status, message: interact.data.message });
       }
     } catch (e) {
       console.log(e);

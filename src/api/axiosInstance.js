@@ -3,10 +3,12 @@ import axios from "axios";
 const API_BASE_URL = "http://localhost:8080";
 
 const baseAxios = axios.create({
+    validateStatus: () => true,
     baseURL: API_BASE_URL
 });
 
 const authAxios = axios.create({
+    validateStatus: () => true,
     baseURL: API_BASE_URL
 });
 
@@ -29,30 +31,31 @@ const setupInterceptors = (refresh, logout) => {
     );
 
     authAxios.interceptors.response.use(
-        (response) => response,
-        async (error) => {
-            const originalRequest = error.config;
-            if (error.response &&
-                error.response.status === 401 &&
-                !originalRequest._retry) {
-                originalRequest._retry = true;
-                try {
-                    const newToken = await refresh();
-                    if (newToken) {
-                        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                        return baseAxios(originalRequest);
-                    } else {
+        async (response) => {
+            if(response.status === 401){
+                const originalRequest = response.config;
+                if (!originalRequest._retry) {
+                    originalRequest._retry = true;
+                    try {
+                        const newToken = await refresh();
+                        if (newToken) {
+                            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                            return baseAxios(originalRequest);
+                        } else {
+                            logout();
+                            return Promise.reject(response);
+                        }
+                    } catch (refreshError) {
+                        console.error("Unable to update token:", refreshError);
                         logout();
-                        return Promise.reject(error);
+                        return Promise.reject(refreshError);
                     }
-                } catch (refreshError) {
-                    console.error("Unable to update token:", refreshError);
-                    logout();
-                    return Promise.reject(refreshError);
                 }
+                return Promise.reject(response);
             }
-            return Promise.reject(error);
-        }
+            return response;
+        },
+        (error) => Promise.reject(error)
     );
 };
 
