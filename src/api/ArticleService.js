@@ -26,6 +26,11 @@ export default class ArticleService{
         return response;
     }
 
+    static async getRecommendations(){
+        const response = await authAxios.get('/platform/protected/article/recommend');
+        return response;
+    }
+
     static async create(data){
         const response = await authAxios.post('/platform/protected/article', data, null);
         return response;
