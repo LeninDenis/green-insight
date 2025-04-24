@@ -46,7 +46,7 @@ const HomePage = () => {
             <div className="articles-grid">
                 {articles.map((article) => (
                     <ArticleCard
-                        article={article}
+                        key={article.id} article={article}
                     />
                 ))}
             </div>

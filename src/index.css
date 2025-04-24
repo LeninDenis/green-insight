@@ -25,7 +25,7 @@ a {
   --modal-text: black;
   --button-bg: #3cb371;
   --button-text: white;
-  --button-border: none;
+  --button-border: #aaa;
   --button-hover-bg: #2e8b57;
   --card-border: #ccc;
   --footer-bg: #2e8b57;
