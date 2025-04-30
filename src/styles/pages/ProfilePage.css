@@ -34,11 +34,15 @@
 .author-section {
   margin-top: 3rem;
   text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .author-section h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .articles-list p {
@@ -103,4 +107,46 @@
 
 .create-article-btn:hover {
   background-color: #388e3c;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tabs button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.tabs button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.tabs button.active {
+  background-color: var(--accent-color, #4caf50);
+  color: white;
+}
+
+.tab-content p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.tab-content a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.tab-content a:hover {
+  text-decoration: underline;
 }

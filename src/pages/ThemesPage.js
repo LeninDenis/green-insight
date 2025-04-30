@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/pages/ThemesPage.css';
+import { Link } from 'react-router-dom';
 
 const themes = [
   { id: 1, title: 'Климат и окружающая среда', description: 'Изучение изменений климата, экологии и влияния человека на природу.' },
@@ -15,10 +16,12 @@ const Themes = () => {
       <h1>Темы</h1>
       <div className="themes-grid">
         {themes.map((theme) => (
-          <div key={theme.id} className="theme-card">
-            <h3>{theme.title}</h3>
-            <p>{theme.description}</p>
-          </div>
+          <Link to={`/themes/${theme.id}`} key={theme.id} className="theme-card-link">
+            <div className="theme-card">
+              <h3>{theme.title}</h3>
+              <p>{theme.description}</p>
+            </div>
+          </Link>
         ))}
       </div>
       <button className="suggest-theme-btn">Предложить тему</button>

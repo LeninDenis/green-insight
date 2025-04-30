@@ -1,66 +1,78 @@
 .article-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: Arial, sans-serif;
-  }
-  
-  .annotation {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 20px;
-  }
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
 
-  .content{
-      margin-bottom: 1.5rem;
-  }
+.annotation {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 20px;
+}
 
-  .like-section{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-  }
+.content {
+  margin-bottom: 1.5rem;
+}
 
-  .like-section {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .like-button-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .like-button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .like-button.liked {
-    background-color: #2ecc71;
-  }
-  
-  .view-section {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: #666;
-    font-size: 1rem;
-  }
-  
-  
-  .view-section svg {
-    margin-left: 0.5rem;
-  }
-  
+.like-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.like-button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.like-button.liked {
+  background-color: #2ecc71;
+}
+
+.view-section {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+.view-section svg {
+  margin-left: 0.5rem;
+}
+
+.rating-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rating-section h4 {
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.rating-stars svg {
+  cursor: pointer;
+}

@@ -14,10 +14,12 @@ const ProfilePage = () => {
   const { user } = useAuth();
   const [currentUser, setCurrentUser] = useState(null);
   const [articles, setArticles] = useState([]);
+  const [likedArticles, setLikedArticles] = useState([]);
   const [status, setStatus] = useState('USER');
   const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('myArticles');
 
   const subscriptions = ['Standard'];
 
@@ -36,6 +38,8 @@ const ProfilePage = () => {
         if (arts.status === 200) {
           setArticles(arts.data);
         }
+
+        setLikedArticles([]);
       }
     } catch (e) {
       console.log(e);
@@ -43,7 +47,7 @@ const ProfilePage = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (user) {
@@ -61,12 +65,12 @@ const ProfilePage = () => {
         <p><strong>Статус:</strong> {status} </p>
 
         {user.id === currentUser.id && (
-            <div className="create-article-wrapper">
-              <Link to="/create-article">
-                <button className="create-article-btn">Создать статью</button>
-              </Link>
-            </div>
-          )}
+          <div className="create-article-wrapper">
+            <Link to="/create-article">
+              <button className="create-article-btn">Создать статью</button>
+            </Link>
+          </div>
+        )}
 
         {user.id === currentUser?.id && (
           <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
@@ -77,19 +81,50 @@ const ProfilePage = () => {
 
       {(status === 'AUTHOR' || status === 'ADMIN') && (
         <div className="author-section">
-          <h3>Мои статьи</h3>
-
-          <div>
-            {articles.map((article) => (
-              <p key={article.id}><Link>{article.title}</Link></p>
-            ))}
+          <div className="tabs">
+            <button
+              className={activeTab === 'myArticles' ? 'active' : ''}
+              onClick={() => setActiveTab('myArticles')}
+            >
+              Мои статьи
+            </button>
+            <button
+              className={activeTab === 'likedArticles' ? 'active' : ''}
+              onClick={() => setActiveTab('likedArticles')}
+            >
+              Понравившиеся
+            </button>
           </div>
 
-          {status === 'USER' && user.id === currentUser.id && (
-            <button className="subscription-btn">
-              Оформить подписку
-            </button>
-          )}
+          <div className="tab-content">
+            {activeTab === 'myArticles' && (
+              <div>
+                {articles.length === 0 ? (
+                  <p>У вас пока нет опубликованных статей.</p>
+                ) : (
+                  articles.map((article) => (
+                    <p key={article.id}>
+                      <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                    </p>
+                  ))
+                )}
+              </div>
+            )}
+
+            {activeTab === 'likedArticles' && (
+              <div>
+                {likedArticles.length === 0 ? (
+                  <p>Вы ещё не поставили лайк ни одной статье.</p>
+                ) : (
+                  likedArticles.map((article) => (
+                    <p key={article.id}>
+                      <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                    </p>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
