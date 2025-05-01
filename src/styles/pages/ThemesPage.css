@@ -49,3 +49,22 @@
   background-color: var(--header-bg);
   color: var(--header-text);
 }
+
+@media (max-width: 768px) {
+  .themes-page {
+    padding: 1rem;
+  }
+
+  .themes-grid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .theme-card {
+    width: 100%;
+  }
+
+  .suggest-theme-btn {
+    width: 100%;
+  }
+}

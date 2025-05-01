@@ -76,3 +76,39 @@
 .rating-stars svg {
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .article-page {
+    padding: 1rem;
+  }
+
+  .annotation {
+    font-size: 0.9rem;
+  }
+
+  .content {
+    font-size: 0.9rem;
+  }
+
+  .like-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .like-button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .view-section {
+    font-size: 0.9rem;
+  }
+
+  .rating-section h4 {
+    font-size: 1.2rem;
+  }
+
+  .rating-stars {
+    gap: 0.3rem;
+  }
+}

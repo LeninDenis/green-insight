@@ -95,3 +95,32 @@
   color: white;
   width: 100%;
 }
+
+@media (max-width: 480px) {
+  .modal {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+
+  .form-group input {
+    width: 100%;
+  }
+
+  .close-button {
+    top: -12px;
+    right: -12px;
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+}

@@ -34,3 +34,25 @@
 .footer-links a:hover {
   color: var(--footer-link-hover-color);
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .footer-links a {
+    font-size: 0.95rem;
+  }
+}

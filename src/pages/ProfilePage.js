@@ -8,6 +8,7 @@ import UserService from "../api/UserService";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/UI/Loader";
 import ArticleService from "../api/ArticleService";
+import ModerationTab from '../components/ModerationTab';
 
 const ProfilePage = () => {
   const params = useParams();
@@ -18,6 +19,7 @@ const ProfilePage = () => {
   const [status, setStatus] = useState('USER');
   const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [moderationOpen, setModerationOpen] = useState(false); // Модерация
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('myArticles');
 
@@ -65,17 +67,21 @@ const ProfilePage = () => {
         <p><strong>Статус:</strong> {status} </p>
 
         {user.id === currentUser.id && (
-          <div className="create-article-wrapper">
+          <div className="button-group">
             <Link to="/create-article">
               <button className="create-article-btn">Создать статью</button>
             </Link>
-          </div>
-        )}
 
-        {user.id === currentUser?.id && (
-          <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
-            Редактировать профиль
-          </button>
+            <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
+              Редактировать профиль
+            </button>
+
+            {status === 'ADMIN' && (
+              <button className="moderation-btn" onClick={() => setModerationOpen(true)}>
+                Модерация
+              </button>
+            )}
+          </div>
         )}
       </div>
 
@@ -135,10 +141,6 @@ const ProfilePage = () => {
               Мои подписки
             </button>
           )}
-
-          {currentUser && (
-            <button className="logout-btn">Выйти</button>
-          )}
         </div>
       )}
 
@@ -154,6 +156,15 @@ const ProfilePage = () => {
           user={currentUser}
           onClose={() => setEditModalOpen(false)}
         />
+      )}
+
+      {moderationOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setModerationOpen(false)}>Закрыть</button>
+            <ModerationTab />
+          </div>
+        </div>
       )}
     </div>
   );

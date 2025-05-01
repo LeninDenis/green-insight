@@ -41,3 +41,17 @@ body.dark-mode .aboutus-page h1 {
 body.dark-mode .aboutus-page p {
   color: var(--modal-text);
 }
+
+@media (max-width: 768px) {
+  .aboutus-page {
+    padding: 1rem;
+  }
+
+  .aboutus-page h1 {
+    font-size: 1.8rem;
+  }
+
+  .aboutus-page p {
+    font-size: 0.9rem;
+  }
+}

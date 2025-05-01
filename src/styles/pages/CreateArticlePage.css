@@ -56,4 +56,17 @@
     cursor: not-allowed;
   }
 
+  @media (max-width: 600px) {
+    .publish-form {
+      padding: 1rem;
+    }
+  
+    .publish-buttons {
+      flex-direction: column;
+    }
+  
+    .publish-buttons button {
+      width: 100%;
+    }
+  }
   

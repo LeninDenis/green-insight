@@ -46,3 +46,21 @@
     color: var(--close-btn-color);
   }
   
+  @media (max-width: 480px) {
+    .subscriptions-modal {
+      width: 90%;
+      padding: 16px;
+    }
+  
+    .subscriptions-modal li {
+      font-size: 15px;
+      padding: 6px 0;
+    }
+  
+    .close-btn {
+      top: 8px;
+      right: 10px;
+      font-size: 22px;
+    }
+  }
+  

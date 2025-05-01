@@ -62,3 +62,28 @@
     background-color: var(--button-hover-bg);
   }
   
+  @media (max-width: 768px) {
+    .article-card {
+      padding: 1rem;
+    }
+  
+    .article-title {
+      font-size: 1.2rem;
+    }
+  
+    .article-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .article-annotation {
+      font-size: 0.95rem;
+    }
+  
+    .read-more-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  

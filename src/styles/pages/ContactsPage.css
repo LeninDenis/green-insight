@@ -119,3 +119,38 @@ body.dark-mode .submit-btn {
 body.dark-mode .submit-btn:hover {
   background-color: var(--button-hover-bg);
 }
+
+@media (max-width: 768px) {
+  .contacts-page {
+    padding: 1rem;
+  }
+
+  .contacts-page h1 {
+    font-size: 1.8rem;
+  }
+
+  .contacts-page p {
+    font-size: 0.9rem;
+  }
+
+  .contacts-form {
+    padding: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+
+  .contact-info {
+    font-size: 0.9rem;
+  }
+}

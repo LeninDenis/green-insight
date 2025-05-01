@@ -76,3 +76,25 @@
     color: var(--modal-text);
   }
   
+  @media (max-width: 480px) {
+    .register-form {
+      width: 90%;
+      padding: 16px;
+    }
+  
+    .register-form .form-group input {
+      width: 100%;
+    }
+  
+    .submit-btn {
+      font-size: 15px;
+      padding: 10px;
+    }
+  
+    .close-btn {
+      top: 8px;
+      right: 10px;
+      font-size: 22px;
+    }
+  }
+  

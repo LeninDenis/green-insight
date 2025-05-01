@@ -25,3 +25,20 @@
     background-color: var(--card-border);
   }
   
+  @media (max-width: 480px) {
+    .search-articles {
+      margin: 15px 10px;
+      max-width: 100%;
+    }
+  
+    .search-articles input {
+      font-size: 15px;
+      padding: 8px;
+    }
+  
+    .results-list li {
+      font-size: 15px;
+      padding: 8px;
+    }
+  }
+  

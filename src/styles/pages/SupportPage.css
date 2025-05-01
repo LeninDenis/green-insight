@@ -88,3 +88,30 @@ body.dark-mode .support-page .faq-item {
 body.dark-mode .support-page .faq-item:hover {
   background-color: var(--card-hover-bg);
 }
+
+@media (max-width: 768px) {
+  .support-page {
+    padding: 1rem;
+  }
+
+  .support-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .support-page p {
+    font-size: 0.9rem;
+  }
+
+  .support-page h2 {
+    font-size: 1.2rem;
+  }
+
+  .support-page .faq-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .support-page .faq-item {
+    width: 100%;
+  }
+}
