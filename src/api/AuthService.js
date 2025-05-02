@@ -7,14 +7,14 @@ export default class AuthService {
             Authorization: `Basic ${authString}`
         };
         const response = await baseAxios
-            .post('http://localhost:8080/auth/login', null, { headers });
+            .post('/auth/login', null, { headers });
         return response;
     }
 
     // {"fname": "", "lname": "", "email": "", "password": ""}
     static async register(newUserForm) {
         const response = await baseAxios
-            .post('http://localhost:8080/auth/register', newUserForm);
+            .post('/auth/register', newUserForm);
         return response;
     }
 
@@ -24,7 +24,7 @@ export default class AuthService {
             tokenType: "REFRESH"
         };
         const response = await baseAxios
-            .post('http://localhost:8080/auth/refresh', body);
+            .post('/auth/refresh', body);
         return response;
     }
 }
