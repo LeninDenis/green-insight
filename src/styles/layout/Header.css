@@ -146,8 +146,8 @@
     justify-content: center;
   }
 
-  .logo img {
-    height: 70px;
+  .logo {
+    display: none;
   }
 
   .nav {
