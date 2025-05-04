@@ -70,10 +70,9 @@ const ArticlePage = () => {
     try {
       let reqLike = likes - article.interaction.likes;
       if (reqLike === 0) reqLike = null;
-      let reqRating = !rated ? null : ratings;
       const view = 1;
 
-      const response = await ArticleService.interact(article.id, reqLike, view, reqRating);
+      const response = await ArticleService.interact(article.id, reqLike, view, ratings);
       if (response.status === 200) {
         console.log("Successfully interacted");
       } else {
