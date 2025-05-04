@@ -13,7 +13,9 @@ const ArticlePage = () => {
   const params = useParams();
   const { user, logged } = useAuth();
   const articleRef = useRef(null);
+  const interactionRef = useRef(null);
   const likeRef = useRef(0);
+  const ratingRef = useRef(0);
   const [article, setArticle] = useState(null);
   const [interaction, setInteraction] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,11 +60,46 @@ const ArticlePage = () => {
     }
   };
 
+  const sendInteraction = async () => {
+    const article = articleRef.current;
+    const likes = likeRef.current;
+    const ratings = ratingRef.current;
+
+    if (!article) return;
+
+    try {
+      let reqLike = likes - article.interaction.likes;
+      if (reqLike === 0) reqLike = null;
+      let reqRating = !rated ? null : ratings;
+      const view = 1;
+
+      const response = await ArticleService.interact(article.id, reqLike, view, reqRating);
+      if (response.status === 200) {
+        console.log("Successfully interacted");
+      } else {
+        console.error(response);
+      }
+    } catch (e) {
+      console.log(e);
+      console.error("Error while trying to interact ", e);
+    }
+  }
+
   useEffect(() => {
-    if (logged !== null) {
+    if(logged !== null) {
       fetchData(params.id);
     }
   }, [logged]);
+
+  useEffect(() => {
+    return () => {
+      sendInteraction();
+    }
+  }, []);
+
+  useEffect(() => {
+    ratingRef.current = rating;
+  }, [rating]);
 
   useEffect(() => {
     articleRef.current = article;
