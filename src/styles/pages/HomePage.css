@@ -194,7 +194,10 @@
   }
 
   .read-more-btn {
-    width: 100%;
+    width: fit-content;
+    max-width: 200px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
     text-align: center;
   }
 }

@@ -56,17 +56,33 @@
     cursor: not-allowed;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
     .publish-form {
-      padding: 1rem;
+      padding: 0.8rem;
+    }
+  
+    .form-group label {
+      font-size: 0.85rem;
+    }
+  
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      font-size: 0.85rem;
+      padding: 8px;
     }
   
     .publish-buttons {
       flex-direction: column;
+      gap: 10px;
+      margin-top: 1rem;
     }
   
     .publish-buttons button {
       width: 100%;
+      font-size: 15px;
+      padding: 10px;
     }
   }
+  
   

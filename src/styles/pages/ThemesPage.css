@@ -61,10 +61,14 @@
   }
 
   .theme-card {
-    width: 100%;
+    width: 93%;
+    padding: 12px;
+    font-size: 0.9rem;
   }
 
   .suggest-theme-btn {
     width: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
   }
 }

@@ -78,23 +78,38 @@
   
   @media (max-width: 480px) {
     .register-form {
-      width: 90%;
-      padding: 16px;
+      width: 75%;
+      padding: 15px;
+    }
+  
+    .register-form h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+  
+    .register-form .form-group {
+      margin-bottom: 10px;
+    }
+  
+    .register-form .form-group label {
+      font-size: 0.9rem;
     }
   
     .register-form .form-group input {
-      width: 100%;
+      width: 111%;
+      padding: 8px;
+      font-size: 0.9rem;
     }
   
     .submit-btn {
-      font-size: 15px;
-      padding: 10px;
+      font-size: 14px;
+      padding: 8px;
     }
   
     .close-btn {
-      top: 8px;
-      right: 10px;
-      font-size: 22px;
+      top: 1px;
+      right: 1px;
+      font-size: 20px;
     }
   }
   

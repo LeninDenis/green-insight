@@ -91,13 +91,16 @@
   }
 
   .like-section {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-end;
   }
 
   .like-button {
-    width: 100%;
-    margin-bottom: 1rem;
+    width: fit-content;
+    max-width: 200px;
   }
 
   .view-section {

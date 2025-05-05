@@ -158,3 +158,72 @@
   gap: 10px;
   margin-top: 1rem;
 }
+
+@media (max-width: 480px) {
+  .profile-page {
+    padding: 1rem;
+  }
+
+  .profile-info {
+    padding: 1rem;
+    width: 90%;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-info p {
+    font-size: 1rem;
+  }
+
+  .author-section {
+    padding: 0 0.5rem;
+  }
+
+  .author-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .articles-list p,
+  .tab-content p {
+    font-size: 1rem;
+  }
+
+  .profile-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .subscription-btn,
+  .logout-btn,
+  .create-article-btn,
+  .tabs button {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-content {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .close-btn {
+    top: 8px;
+    right: 10px;
+    font-size: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

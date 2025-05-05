@@ -120,37 +120,49 @@ body.dark-mode .submit-btn:hover {
   background-color: var(--button-hover-bg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .contacts-page {
-    padding: 1rem;
+    padding: 0.8rem;
   }
 
   .contacts-page h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .contacts-page p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .contacts-form {
     padding: 0.5rem;
   }
 
+  .form-group {
+    width: 85%;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
   .form-group label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .form-group input,
   .form-group textarea {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 8px;
   }
 
   .submit-btn {
-    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+    width: 90%;
   }
 
   .contact-info {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
   }
 }
+
