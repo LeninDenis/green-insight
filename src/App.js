@@ -15,6 +15,7 @@ import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import CreateArticlePage from './pages/CreateArticlePage';
 import ArticlePage from './pages/ArticlePage';
+import SubscribePage from './pages/SubscribePage';
 import './App.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/user/:id" element={<ProfilePage />} />
                 <Route path="/create-article" element={<CreateArticlePage />} />
                 <Route path="/articles/:id" element={<ArticlePage />} />
+                <Route path="/subscribe" element={<SubscribePage />} />
               </Routes>
             </main>
 
