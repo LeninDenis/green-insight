@@ -1,91 +1,79 @@
-import React, {useEffect, useState} from 'react';
-import ErrorPopup from '../components/UI/ErrorPopup';
+import React, { useEffect, useState } from 'react';
 import '../styles/pages/CreateArticlePage.css';
 import Selector from "../components/UI/Selector";
 import CategoryService from "../api/CategoryService";
 import Loader from "../components/UI/Loader";
 import MDEditor from "@uiw/react-md-editor";
 import ArticleService from "../api/ArticleService";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const CreateArticlePage = () => {
   const navigate = useNavigate();
   const [articleForm, setArticleForm] = useState({
-      title: '',
-      category: '',
-      annotation: '',
-      content: ''
+    title: '',
+    category: '',
+    annotation: '',
+    content: ''
   });
   const [categories, setCategories] = useState([]);
   const [choose, setChoose] = useState(null);
   const [content, setContent] = useState('');
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const canPublishPaid = false; // заглушка
+  const canPublishPaid = false;
 
   const fetchData = async () => {
-      try{
-          const cats = await CategoryService.getCategories();
-          if(cats.status === 200){
-              setCategories(cats.data);
-          } else {
-              setErrorData(cats.status, cats.data.message);
-          }
-      } catch (e) {
-          setErrorData(500, 'Неизвестная ошибка...');
-      } finally {
-          setLoading(false);
+    try {
+      const cats = await CategoryService.getCategories();
+      if (cats.status === 200) {
+        setCategories(cats.data);
+      } else {
+        toast.error(cats.data.message || 'Ошибка загрузки категорий');
       }
-  }
+    } catch (e) {
+      toast.error('Неизвестная ошибка...');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-      fetchData();
+    fetchData();
   }, []);
 
   const handleForm = (type, value) => {
     setArticleForm({
-        ...articleForm,
-        [type]: value
+      ...articleForm,
+      [type]: value
     });
   };
 
-  const setErrorData = (status, message) => {
-      setError({
-          status: status,
-          message: message
-      });
-  };
-
   const handleSubmit = async (isPaid) => {
-    try{
-        if (isPaid && !canPublishPaid) {
-            setErrorData(403, 'Для платной публикации необходима специальная подписка.');
+    try {
+      if (isPaid && !canPublishPaid) {
+        toast.warn('Для платной публикации необходима специальная подписка.');
+      } else {
+        if (!choose) {
+          toast.error('Необходимо выбрать тему!');
         } else {
-            if(!choose) {
-                setErrorData(404, 'Необходимо выбрать тему!');
-            } else {
-                const newArticle = {
-                    ...articleForm,
-                    category: choose.id,
-                    content: content
-                };
-                console.log('Публикация статьи:', newArticle);
-                const response = await ArticleService.create(newArticle);
-                if(response.status === 201){
-                    navigate("/");
-                } else {
-                    setErrorData(response.status, response.data.message);
-                }
-            }
+          const newArticle = {
+            ...articleForm,
+            category: choose.id,
+            content: content
+          };
+          const response = await ArticleService.create(newArticle);
+          if (response.status === 201) {
+            toast.success('Статья успешно опубликована');
+            navigate("/");
+          } else {
+            toast.error(response.data.message || 'Ошибка публикации статьи');
+          }
         }
-    } catch (e){
-        setErrorData(500, 'Неизвестная ошибка...');
+      }
+    } catch (e) {
+      toast.error('Неизвестная ошибка...');
     }
-  };
-
-  const handleErrorClose = () => {
-      setError(null);
   };
 
   return loading ? (<Loader />) : (
@@ -100,7 +88,7 @@ const CreateArticlePage = () => {
         placeholder="Введите заголовок"
       />
 
-      <Selector options={categories} defaultValue={'Выберите тему'} value={choose} onChange={setChoose}/>
+      <Selector options={categories} defaultValue={'Выберите тему'} value={choose} onChange={setChoose} />
 
       <label>Аннотация</label>
       <textarea className='annotation-text'
@@ -111,11 +99,7 @@ const CreateArticlePage = () => {
       />
 
       <label>Контент статьи</label>
-      <MDEditor
-          value={content}
-          onChange={setContent}
-      />
-
+      <MDEditor value={content} onChange={setContent} />
 
       <div className="publish-buttons">
         <button onClick={() => handleSubmit(false)}>Публикация</button>
@@ -128,14 +112,6 @@ const CreateArticlePage = () => {
           Платная публикация
         </button>
       </div>
-
-      {error && (
-        <ErrorPopup
-          status={error.status}
-          message={error.message}
-          onClose={handleErrorClose}
-        />
-      )}
     </div>
   );
 };

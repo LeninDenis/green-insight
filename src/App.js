@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import HomePage from './pages/HomePage';
@@ -51,6 +54,8 @@ function App() {
 
             {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
             {showRegister && <RegisterForm onClose={() => setShowRegister(false)} />}
+
+            <ToastContainer position="top-right" autoClose={3000} />
           </div>
         </Router>
       </ThemeProvider>

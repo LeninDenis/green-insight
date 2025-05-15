@@ -1,31 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import ArticleService from '../api/ArticleService';
 import Loader from '../components/UI/Loader';
-import ErrorPopup from '../components/UI/ErrorPopup';
 import { useAuth } from '../context/AuthContext';
 import '../styles/pages/ArticlePage.css';
 import { Eye, ThumbsUp } from 'lucide-react';
 import MDEditor from "@uiw/react-md-editor";
 import ReactStars from "react-rating-stars-component";
+import { toast } from 'react-toastify';
 
 const ArticlePage = () => {
   const params = useParams();
   const { user, logged } = useAuth();
   const articleRef = useRef(null);
-  const interactionRef = useRef(null);
   const likeRef = useRef(0);
   const ratingRef = useRef(0);
+
   const [article, setArticle] = useState(null);
   const [interaction, setInteraction] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(null);
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
 
-  const fetchData = async (id) => {
+  const fetchData = useCallback(async (id) => {
     setLoading(true);
     try {
       const art = user
@@ -34,12 +33,15 @@ const ArticlePage = () => {
       const interact = user
         ? await ArticleService.getInteraction(user.id, id)
         : "empty";
+
       if (art.status === 200) {
         setArticle(art.data);
         setLikes(art.data.interaction.likes);
       } else {
-        setError({ status: art.status, message: art.data.message });
+        toast.error(`Ошибка загрузки статьи: ${art.data.message} (код ${art.status})`);
+        return;
       }
+
       if (interact.status === 200) {
         setInteraction(interact.data);
         setLiked(interact.data.likes > 0);
@@ -51,14 +53,15 @@ const ArticlePage = () => {
         setInteraction("empty");
         setLiked(false);
       } else {
-        setError({ status: interact.status, message: interact.data.message });
+        toast.error(`Ошибка взаимодействия: ${interact.data.message} (код ${interact.status})`);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      toast.error('Неизвестная ошибка при загрузке данных');
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   const sendInteraction = async () => {
     const article = articleRef.current;
@@ -74,26 +77,27 @@ const ArticlePage = () => {
 
       const response = await ArticleService.interact(article.id, reqLike, view, ratings);
       if (response.status === 200) {
-        console.log("Successfully interacted");
+        // Успешно
       } else {
         console.error(response);
+        toast.error('Ошибка при отправке взаимодействия с статьей');
       }
     } catch (e) {
-      console.log(e);
-      console.error("Error while trying to interact ", e);
+      console.error('Ошибка взаимодействия', e);
+      toast.error('Ошибка при отправке взаимодействия с статьей');
     }
-  }
+  };
 
   useEffect(() => {
-    if(logged !== null) {
+    if (logged !== null) {
       fetchData(params.id);
     }
-  }, [logged]);
+  }, [logged, fetchData, params.id]);
 
   useEffect(() => {
     return () => {
       sendInteraction();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -118,11 +122,26 @@ const ArticlePage = () => {
         setLiked(false);
       }
     } else {
-      setError({ status: 401, message: "Для выполнения этого действия необходимо пройти авторизацию" });
+      toast.error('Для выполнения этого действия необходимо пройти авторизацию');
     }
   };
 
-  return (loading || !article || (user ? !interaction : false)) ? (<Loader />) : (
+  const handleRatingChange = (newRating) => {
+    if (!user) {
+      toast.error('Требуется авторизация для оценки статьи');
+      return;
+    }
+    if (!rated) {
+      setRating(newRating);
+      setRated(true);
+    }
+  };
+
+  if (loading || !article || (user ? !interaction : false)) {
+    return <Loader />;
+  }
+
+  return (
     <div className="article-page">
       <h1>{article.title}</h1>
       <p className="annotation">{article.annotation}</p>
@@ -132,7 +151,8 @@ const ArticlePage = () => {
         <MDEditor.Markdown
           source={article.content}
           className="wmde-markdown"
-          style={{ whiteSpace: 'pre-wrap' }} />
+          style={{ whiteSpace: 'pre-wrap' }}
+        />
       </div>
 
       <div className="like-section">
@@ -148,30 +168,13 @@ const ArticlePage = () => {
         <h4>Оцените статью:</h4>
         <ReactStars
           count={5}
-          onChange={(newRating) => {
-            if (!user) {
-              setError({ status: 401, message: "Требуется авторизация для оценки статьи" });
-              return;
-            }
-            if (!rated) {
-              setRating(newRating);
-              setRated(true);
-            }
-          }}
+          onChange={handleRatingChange}
           size={30}
           activeColor="#ffd700"
           value={rating}
           edit={!rated}
         />
       </div>
-
-      {error && (
-        <ErrorPopup
-          status={error.status}
-          message={error.message}
-          onClose={() => setError(null)}
-        />
-      )}
     </div>
   );
 };

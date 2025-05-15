@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from '../context/AuthContext';
 import '../styles/RegisterForm.css';
+import { toast } from 'react-toastify';
 
 const RegisterForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,14 @@ const RegisterForm = ({ onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("Registration initiated");
     e.preventDefault();
-    await register(formData);
-    window.location.reload();
+    try {
+      await register(formData);
+      toast.success("Регистрация прошла успешно");
+      window.location.reload();
+    } catch (error) {
+      toast.error("Ошибка регистрации. Проверьте данные.");
+    }
   };
 
   return (

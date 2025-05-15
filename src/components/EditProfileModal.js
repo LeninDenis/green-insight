@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/EditProfileModal.css';
 import UserService from '../api/UserService';
+import { toast } from 'react-toastify';
 
 const EditProfileModal = ({ user, onClose }) => {
   const [fname, setFname] = useState(user.fname || '');
@@ -9,9 +10,10 @@ const EditProfileModal = ({ user, onClose }) => {
   const handleSave = async () => {
     try {
       await UserService.updateUser(user.id, { fname, lname });
+      toast.success('Профиль успешно обновлён');
       onClose();
     } catch (e) {
-      console.error('Ошибка при обновлении профиля:', e);
+      toast.error('Ошибка при обновлении профиля');
     }
   };
 

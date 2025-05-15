@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from '../context/AuthContext';
 import '../styles/LoginForm.css';
+import { toast } from 'react-toastify';
 
 const LoginForm = ({ onClose }) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -11,10 +12,14 @@ const LoginForm = ({ onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("Login initiated");
     e.preventDefault();
-    await login(credentials);
-    window.location.reload();
+    try {
+      await login(credentials);
+      toast.success("Вы успешно вошли в аккаунт");
+      window.location.reload();
+    } catch (error) {
+      toast.error("Ошибка входа. Проверьте email и пароль.");
+    }
   };
 
   return (
