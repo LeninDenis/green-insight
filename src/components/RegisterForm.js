@@ -20,9 +20,13 @@ const RegisterForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(formData);
-      toast.success("Регистрация прошла успешно");
-      window.location.reload();
+      const res = await register(formData);
+      if(res.status === 200){
+        toast.success("Регистрация прошла успешно");
+        window.location.reload();
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       toast.error("Ошибка регистрации. Проверьте данные.");
     }

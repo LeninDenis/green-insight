@@ -14,11 +14,15 @@ const LoginForm = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(credentials);
-      toast.success("Вы успешно вошли в аккаунт");
-      window.location.reload();
+      const res = await login(credentials);
+      if(res.status === 200){
+        toast.success("Вы успешно вошли в аккаунт");
+        window.location.reload();
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
-      toast.error("Ошибка входа. Проверьте email и пароль.");
+      toast.error("Ошибка сервера. Повторите позднее.");
     }
   };
 

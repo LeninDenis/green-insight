@@ -152,6 +152,10 @@
   margin-right: 2px;
 }
 
+.starred{
+  color: var(--text-color);
+}
+
 .rating-value {
   margin-left: 6px;
   font-weight: bold;

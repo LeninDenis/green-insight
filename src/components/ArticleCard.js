@@ -21,18 +21,21 @@ const ArticleCard = ({ article }) => {
       <div className="article-stats">
         <div className="article-rating">
           {[1, 2, 3, 4, 5].map((i) => (
-            <Star key={i} size={16} className="star-icon" />
+            <Star
+                key={i}
+                size={16}
+                className={`star-icon ${i <= Math.floor(article.interaction.rating) ? 'starred' : ''}`}/>
           ))}
-          <span className="rating-value">0.0</span>
+          <span className="rating-value">{article.interaction.rating || 0.0}</span>
         </div>
         <div className="article-actions">
           <div className="icon-with-text">
             <ThumbsUp size={16} />
-            <span>{article.likes || 0}</span>
+            <span>{article.interaction.likes || 0}</span>
           </div>
           <div className="icon-with-text">
             <Eye size={16} />
-            <span>{article.views || 0}</span>
+            <span>{article.interaction.views || 0}</span>
           </div>
         </div>
       </div>
