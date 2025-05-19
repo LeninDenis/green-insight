@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { Star, ThumbsUp, Eye } from "lucide-react";
 import '../styles/pages/HomePage.css';
+import {useTheme} from "../context/ThemeContext";
 
 const ArticleCard = ({ article }) => {
+  const { isDarkMode } = useTheme();
   const date = new Date(article.creationDate);
 
   return (
@@ -21,12 +23,18 @@ const ArticleCard = ({ article }) => {
       <div className="article-stats">
         <div className="article-rating">
           {[1, 2, 3, 4, 5].map((i) => (
-            <Star
-                key={i}
-                size={16}
-                className={`star-icon ${i <= Math.floor(article.interaction.rating) ? 'starred' : ''}`}/>
+              <Star
+                  key={i}
+                  size={16}
+                  color={
+                      i <= Math.floor(article.interaction.rating)
+                          ? (isDarkMode ? "#e0e0e0" : "#333333")
+                          : "#ccc"
+                  }
+                  className="star-icon"
+              />
           ))}
-          <span className="rating-value">{article.interaction.rating || 0.0}</span>
+          <span className="rating-value">{(article.interaction.rating || 0.0).toFixed(1)}</span>
         </div>
         <div className="article-actions">
           <div className="icon-with-text">

@@ -152,8 +152,9 @@
   margin-right: 2px;
 }
 
-.starred{
+.star-icon.starred{
   color: var(--text-color);
+  margin-right: 2px;
 }
 
 .rating-value {
