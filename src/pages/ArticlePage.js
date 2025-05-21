@@ -95,10 +95,16 @@ const ArticlePage = () => {
   }, [logged, fetchData, params.id]);
 
   useEffect(() => {
-    return () => {
+    const handleBeforeUnload = () => {
       sendInteraction();
     };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      sendInteraction();
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
+
 
   useEffect(() => {
     ratingRef.current = rating;

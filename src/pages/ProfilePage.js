@@ -9,71 +9,64 @@ import ArticleService from "../api/ArticleService";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/UI/Loader";
 import ModerationTab from '../components/ModerationTab';
+import {useQuery} from "@tanstack/react-query";
+import {toast} from "react-toastify";
+
+const fetchProfileData = async (id, user) => {
+  const response = await UserService.getUserById(id);
+  if (response.status !== 200) throw new Error('Ошибка загрузки профиля');
+
+  const data = response.data;
+  let arts;
+  if (user && user.role === 'ADMIN') {
+    arts = await ArticleService.getArticlesByUIdProtected(id);
+  } else {
+    arts = await ArticleService.getArticlesByUId(id);
+  }
+
+  if (arts.status !== 200 && arts.status !== 404) throw new Error('Ошибка загрузки статей');
+
+  return { currentUser: data, articles: arts.data };
+};
 
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, logged } = useAuth();
-  const [currentUser, setCurrentUser] = useState(null);
-  const [articles, setArticles] = useState([]);
   const [likedArticles, setLikedArticles] = useState([]);
-  const [status, setStatus] = useState('USER');
   const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [moderationOpen, setModerationOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('myArticles');
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['profile', id, user?.role],
+    queryFn: () => fetchProfileData(id, user),
+    enabled: logged !== null,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+    retry: 1,
+  });
 
   const subscriptions = ['Standard']; // заглушка
 
-  const fetchData = async (id) => {
-    try {
-      const response = await UserService.getUserById(id);
-      if (response.status === 200) {
-        const data = response.data;
-        setCurrentUser(data);
-        setStatus(data.role);
-
-        let arts;
-        if (user && user.role === 'ADMIN') {
-          arts = await ArticleService.getArticlesByUIdProtected(id);
-        } else {
-          arts = await ArticleService.getArticlesByUId(id);
-        }
-
-        if (arts.status === 200) {
-          setArticles(arts.data);
-        }
-
-        // likedArticles заглушка
-        setLikedArticles([]);
-      }
-    } catch (error) {
-      console.error(error);
-      setArticles([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    console.log(logged);
-    if (logged !== null) {
-      fetchData(id);
+    if(error){
+      toast.error(error.message || "Ошибка сервера, повторите попытку позднее");
     }
-  }, [logged, id]);
+  }, [error]);
 
-  const isCurrentUser = user && currentUser && user.id === currentUser.id;
+  const isCurrentUser = user && data && user.id === data.currentUser.id;
 
-  return loading ? (<Loader />) : (
+  return !data || isLoading ? (<Loader />) : (
     <div className="profile-page">
       <h2>Профиль</h2>
 
       <div className="profile-info">
         <img src={defaultAvatar} alt="Аватар" className="profile-avatar" />
-        <p><strong>Имя:</strong> {currentUser?.fname || 'Имя'}</p>
-        <p><strong>Фамилия:</strong> {currentUser?.lname || 'Фамилия'}</p>
-        <p><strong>Статус:</strong> {status}</p>
+        <p><strong>Имя:</strong> {data.currentUser?.fname || 'Имя'}</p>
+        <p><strong>Фамилия:</strong> {data.currentUser?.lname || 'Фамилия'}</p>
+        <p><strong>Статус:</strong> {data.currentUser?.role || "Пользователь"}</p>
 
         {isCurrentUser && (
           <div className="button-group">
@@ -85,7 +78,7 @@ const ProfilePage = () => {
               Редактировать профиль
             </button>
 
-            {status === 'ADMIN' && (
+            {data.currentUser?.role === 'ADMIN' && (
               <button className="moderation-btn" onClick={() => setModerationOpen(true)}>
                 Модерация
               </button>
@@ -94,7 +87,7 @@ const ProfilePage = () => {
         )}
       </div>
 
-      {(status === 'AUTHOR' || status === 'ADMIN') && (
+      {(data.currentUser?.role === 'AUTHOR' || data.currentUser?.role === 'ADMIN') && (
         <div className="author-section">
           <div className="tabs">
             <button
@@ -113,10 +106,10 @@ const ProfilePage = () => {
 
           <div className="tab-content">
             {activeTab === 'myArticles' ? (
-              articles.length === 0 ? (
+              data.articles?.length === 0 ? (
                 <p>У вас пока нет опубликованных статей.</p>
               ) : (
-                articles.map((article) => (
+                data.articles.map((article) => (
                   <p key={article.id}>
                     <Link to={`/articles/${article.id}`}>{article.title}</Link>
                   </p>
@@ -139,7 +132,7 @@ const ProfilePage = () => {
 
       {isCurrentUser && (
         <div className="profile-buttons">
-          {status === 'USER' && (
+          {data.currentUser?.role === 'USER' && (
             <>
               <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
                 Оформить подписку
@@ -161,7 +154,7 @@ const ProfilePage = () => {
 
       {editModalOpen && (
         <EditProfileModal
-          user={currentUser}
+          user={data.currentUser}
           onClose={() => setEditModalOpen(false)}
         />
       )}
@@ -170,7 +163,7 @@ const ProfilePage = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="close-btn" onClick={() => setModerationOpen(false)}>Закрыть</button>
-            <ModerationTab />
+            <ModerationTab userId={user?.id} currentUserId={data.currentUser?.id}/>
           </div>
         </div>
       )}

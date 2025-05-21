@@ -3,32 +3,32 @@ import '../styles/pages/HomePage.css';
 import ArticleCard from "../components/ArticleCard";
 import ArticleService from "../api/ArticleService";
 import Loader from "../components/UI/Loader";
+import {useQuery} from "@tanstack/react-query";
+import {toast} from "react-toastify";
+
+const fetchData = async () => {
+    const response = await ArticleService.getAllArticles();
+    if(response.status !== 200){
+        throw new Error(response.data?.message || "Ошибка при загрузке статей");
+    }
+    return response.data;
+}
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const {data: articles, isLoading, error} = useQuery({
+      queryKey: ['articles'],
+      queryFn: fetchData,
+      staleTime: Infinity,
+      cacheTime: 10 * 60 * 1000,
+      retry: 1
+  });
 
-  const fetchData = async () => {
-      try{
-          const response = await ArticleService.getAllArticles();
-          if(response.status === 200){
-              setArticles(response.data);
-          }
-      } catch (e) {
-          console.log(e);
-          setArticles([]);
-      } finally {
-          setLoading(false);
-      }
-  }
   useEffect(() => {
-      fetchData();
-  }, [])
-
-  // const filteredArticles = articles.filter((article) =>
-  //   article.title.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+      if(error){
+          toast.error(error.message || "Ошибка сервера, повторите позднее");
+      }
+  }, [error]);
 
   return (
     <div className="homepage">
@@ -42,7 +42,7 @@ const HomePage = () => {
         className="search-input"
       />
 
-        {loading ? (<Loader />) : (
+        {isLoading ? (<Loader />) : (
             <div className="articles-grid">
                 {articles.map((article) => (
                     <ArticleCard

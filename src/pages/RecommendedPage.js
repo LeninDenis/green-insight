@@ -1,44 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/pages/RecommendedPage.css';
 import ArticleCard from '../components/ArticleCard';
 import {useAuth} from "../context/AuthContext";
 import ArticleService from "../api/ArticleService";
-import ErrorPopup from "../components/UI/ErrorPopup";
 import Loader from "../components/UI/Loader";
+import {useQuery} from "@tanstack/react-query";
+import {toast} from "react-toastify";
+
+const fetchRecommended = async (logged) => {
+    if (logged) {
+        const recs = await ArticleService.getRecommendations();
+        if (recs.status !== 200) {
+            throw new Error(recs.data?.message || 'Ошибка при загрузке рекомендаций');
+        }
+        return recs.data;
+    } else {
+        const recs = await ArticleService.getAllArticles();
+        if (recs.status !== 200) {
+            throw new Error(recs.data?.message || 'Ошибка при загрузке статей');
+        }
+        return recs.data;
+    }
+};
 
 const Recommended = () => {
   const { logged } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [recommendedArticles, setRecommendedArticles] = useState([]);
-
-  const fetchData = async () => {
-      setLoading(true);
-      try{
-          const recs = logged
-              ? await ArticleService.getRecommendations()
-              : await ArticleService.getAllArticles();
-          if(recs.status === 200){
-              setRecommendedArticles(recs.data);
-          } else {
-              setError({status: recs.status, message: recs.data.message});
-          }
-      } catch (e){
-          console.log(e);
-      } finally {
-          setLoading(false);
-      }
-  }
+  const {data: recommendedArticles, isLoading, error} = useQuery({
+        queryKey: ['recommend', logged],
+        queryFn: () => fetchRecommended(logged),
+        enabled: logged !== null,
+        staleTime: Infinity,
+        cacheTime: 10 * 60 * 1000,
+        retry: 1
+    });
 
   useEffect(() => {
-      if(logged !== null){
-          fetchData();
+      if(error){
+          toast.error(error.message || "Ошибка сервера, повторите попытку позднее");
       }
-  }, [logged]);
+  }, [error]);
 
-  console.log(logged);
-
-  return loading ? (<Loader />) : (
+  return !recommendedArticles || isLoading ? (<Loader />) : (
     <div className="recommended-page">
       <div className="section">
         <h2>Рекомендуемые статьи</h2>
@@ -48,13 +50,6 @@ const Recommended = () => {
           ))}
         </div>
       </div>
-        {error && (
-            <ErrorPopup
-                status={error.status}
-                message={error.message}
-                onClose={() => setError(null)}
-            />
-        )}
     </div>
   );
 };

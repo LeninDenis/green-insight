@@ -26,6 +26,14 @@ export default class ArticleService{
         return response;
     }
 
+    static async getArticlesProtected(id, status){
+        const params = new URLSearchParams();
+        id && params.append('creator', id);
+        status && params.append('status', status);
+        const response = await authAxios.get(`/platform/protected/article?${params.toString()}`);
+        return response;
+    }
+
     static async getRecommendations(){
         const response = await authAxios.get('/platform/protected/article/recommend');
         return response;
@@ -33,6 +41,13 @@ export default class ArticleService{
 
     static async create(data){
         const response = await authAxios.post('/platform/protected/article', data, null);
+        return response;
+    }
+
+    static async moderate(id, status){
+        const params = new URLSearchParams();
+        params.append('status', status);
+        const response = await authAxios.patch(`/platform/protected/article/moderate/${id}?${params.toString()}`);
         return response;
     }
 
