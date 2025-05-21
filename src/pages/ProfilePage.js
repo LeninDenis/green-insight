@@ -13,8 +13,7 @@ import ModerationTab from '../components/ModerationTab';
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
-
+  const { user, logged } = useAuth();
   const [currentUser, setCurrentUser] = useState(null);
   const [articles, setArticles] = useState([]);
   const [likedArticles, setLikedArticles] = useState([]);
@@ -36,7 +35,7 @@ const ProfilePage = () => {
         setStatus(data.role);
 
         let arts;
-        if (user.role === 'ADMIN') {
+        if (user && user.role === 'ADMIN') {
           arts = await ArticleService.getArticlesByUIdProtected(id);
         } else {
           arts = await ArticleService.getArticlesByUId(id);
@@ -58,16 +57,15 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    console.log(logged);
+    if (logged !== null) {
       fetchData(id);
     }
-  }, [user, id]);
+  }, [logged, id]);
 
-  if (!user || loading) return <Loader />;
+  const isCurrentUser = user && currentUser && user.id === currentUser.id;
 
-  const isCurrentUser = currentUser && user.id === currentUser.id;
-
-  return (
+  return loading ? (<Loader />) : (
     <div className="profile-page">
       <h2>Профиль</h2>
 

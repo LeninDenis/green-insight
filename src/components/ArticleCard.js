@@ -26,12 +26,16 @@ const ArticleCard = ({ article }) => {
               <Star
                   key={i}
                   size={16}
-                  color={
-                      i <= Math.floor(article.interaction.rating)
+                  stroke={
+                      i <= Math.round(article.interaction.rating)
                           ? (isDarkMode ? "#e0e0e0" : "#333333")
                           : "#ccc"
                   }
-                  className="star-icon"
+                  fill={
+                      i <= Math.round(article.interaction.rating)
+                          ? (isDarkMode ? "#e0e0e0" : "#333333")
+                          : "none"
+                  }
               />
           ))}
           <span className="rating-value">{(article.interaction.rating || 0.0).toFixed(1)}</span>

@@ -147,15 +147,15 @@
   align-items: center;
 }
 
-.star-icon {
-  color: #ccc;
-  margin-right: 2px;
-}
+/*.star-icon {*/
+/*  color: #ccc;*/
+/*  margin-right: 2px;*/
+/*}*/
 
-.star-icon.starred{
-  color: var(--text-color);
-  margin-right: 2px;
-}
+/*.star-icon.starred{*/
+/*  color: var(--text-color);*/
+/*  margin-right: 2px;*/
+/*}*/
 
 .rating-value {
   margin-left: 6px;

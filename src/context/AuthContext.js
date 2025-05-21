@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AuthService from "../api/AuthService";
 import {setupInterceptors} from "../api/axiosInstance";
+import {toast} from "react-toastify";
 
 const AuthContext = createContext(null);
 
@@ -57,9 +58,12 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('accessToken', user.access);
       localStorage.setItem('refreshToken', user.refresh);
       localStorage.setItem('user', JSON.stringify(user.user));
+      toast.success("Вы вошли в аккаунт!");
     } else {
-      console.log("Error while trying to LOGIN with status code = "+response.status);
+      toast.error(response.data?.message || "Ошибка сервера, повторите попытку позднее");
+      throw new Error("Error while trying to LOGIN with status code = "+response.status);
     }
+    return response;
   };
 
   const register = async (formData) => {
@@ -73,9 +77,11 @@ export const AuthProvider = ({ children }) => {
         password: formData.password
       };
       console.log("Getting tokens and user data...");
+      toast.success("Регистрация прошла успешно!");
       await login(userData);
     } else {
-      console.log("Error while trying to REGISTER with status code = "+regResponse.status);
+      toast.error(regResponse.data?.message || "Ошибка сервера, повторите попытку позднее");
+      throw new Error("Error while trying to REGISTER with status code = "+regResponse.status);
     }
   };
 
