@@ -112,3 +112,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.verified-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  margin-left: 0.5rem;
+}
+
+.verified-icon {
+  color: #3cb371;
+  font-size: 1rem;
+  cursor: default;
+}
+
+.verified-tooltip {
+  visibility: hidden;
+  background-color: var(--modal-bg);
+  color: var(--modal-text);
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.verified-icon-wrapper:hover .verified-tooltip {
+  visibility: visible;
+  opacity: 1;
+}

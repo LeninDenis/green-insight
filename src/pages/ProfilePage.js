@@ -3,14 +3,16 @@ import '../styles/pages/ProfilePage.css';
 import defaultAvatar from '../assets/avatar/default-avatar.jpg';
 import SubscriptionsModal from '../components/SubscriptionsModal';
 import EditProfileModal from '../components/EditProfileModal';
+import SendLinkModal from '../components/SendLinkModal';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import UserService from "../api/UserService";
 import ArticleService from "../api/ArticleService";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/UI/Loader";
 import ModerationTab from '../components/ModerationTab';
-import {useQuery} from "@tanstack/react-query";
-import {toast} from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { FaCheckCircle } from 'react-icons/fa';
 
 const fetchProfileData = async (id, user) => {
   const response = await UserService.getUserById(id);
@@ -29,6 +31,13 @@ const fetchProfileData = async (id, user) => {
   return { currentUser: data, articles: arts.data };
 };
 
+const VerifiedBadge = () => (
+  <span className="verified-icon-wrapper">
+    <FaCheckCircle className="verified-icon" />
+    <span className="verified-tooltip">Подтверждённый профиль</span>
+  </span>
+);
+
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -37,6 +46,7 @@ const ProfilePage = () => {
   const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [moderationOpen, setModerationOpen] = useState(false);
+  const [showSendLinkModal, setShowSendLinkModal] = useState(false);
   const [activeTab, setActiveTab] = useState('myArticles');
 
   const { data, isLoading, error } = useQuery({
@@ -48,15 +58,28 @@ const ProfilePage = () => {
     retry: 1,
   });
 
-  const subscriptions = ['Standard']; // заглушка
+  const subscriptions = ['Standard'];
 
   useEffect(() => {
-    if(error){
+    if (error) {
       toast.error(error.message || "Ошибка сервера, повторите попытку позднее");
     }
   }, [error]);
 
   const isCurrentUser = user && data && user.id === data.currentUser.id;
+
+  const handleSendLink = async (link) => {
+    try {
+      const response = await UserService.sendDiskLink(link);
+      if (response.status === 200) {
+        toast.success('Ссылка успешно отправлена!');
+      } else {
+        toast.error('Не удалось отправить ссылку');
+      }
+    } catch (err) {
+      toast.error('Ошибка при отправке ссылки');
+    }
+  };
 
   return !data || isLoading ? (<Loader />) : (
     <div className="profile-page">
@@ -64,7 +87,10 @@ const ProfilePage = () => {
 
       <div className="profile-info">
         <img src={defaultAvatar} alt="Аватар" className="profile-avatar" />
-        <p><strong>Имя:</strong> {data.currentUser?.fname || 'Имя'}</p>
+        <p>
+          <strong>Имя:</strong> {data.currentUser?.fname || 'Имя'}
+          {data.currentUser?.is_verified && <VerifiedBadge />}
+        </p>
         <p><strong>Фамилия:</strong> {data.currentUser?.lname || 'Фамилия'}</p>
         <p><strong>Статус:</strong> {data.currentUser?.role || "Пользователь"}</p>
 
@@ -76,6 +102,10 @@ const ProfilePage = () => {
 
             <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
               Редактировать профиль
+            </button>
+
+            <button className="send-link-btn" onClick={() => setShowSendLinkModal(true)}>
+              Отправить ссылку
             </button>
 
             {data.currentUser?.role === 'ADMIN' && (
@@ -159,11 +189,18 @@ const ProfilePage = () => {
         />
       )}
 
+      {showSendLinkModal && (
+        <SendLinkModal
+          onClose={() => setShowSendLinkModal(false)}
+          onSubmit={handleSendLink}
+        />
+      )}
+
       {moderationOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="close-btn" onClick={() => setModerationOpen(false)}>Закрыть</button>
-            <ModerationTab userId={user?.id} currentUserId={data.currentUser?.id}/>
+            <ModerationTab userId={user?.id} currentUserId={data.currentUser?.id} />
           </div>
         </div>
       )}

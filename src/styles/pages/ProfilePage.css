@@ -15,6 +15,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   margin: 0 auto;
+  position: relative;
 }
 
 .profile-avatar {
@@ -24,6 +25,14 @@
   object-fit: cover;
   display: block;
   margin: 0 auto 10px;
+}
+
+.verification-icon {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--link-color);
+  font-size: 1.2rem;
+  vertical-align: middle;
 }
 
 .profile-info p {
@@ -71,7 +80,10 @@
 .logout-btn,
 .create-article-btn,
 .tabs button,
-.close-btn {
+.close-btn,
+.verify-btn,
+.approve-btn,
+.reject-btn {
   padding: 0.75rem 1.5rem;
   background-color: var(--button-bg);
   color: var(--button-text);
@@ -86,7 +98,10 @@
 .logout-btn:hover,
 .create-article-btn:hover,
 .tabs button:hover,
-.close-btn:hover {
+.close-btn:hover,
+.verify-btn:hover,
+.approve-btn:hover,
+.reject-btn:hover {
   background-color: var(--button-hover-bg);
 }
 
@@ -159,6 +174,36 @@
   margin-top: 1rem;
 }
 
+.subscriptions-section {
+  margin-top: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subscriptions-section h3 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.subscription-card {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-card h4 {
+  margin: 0 0 0.5rem;
+}
+
+.subscription-card p {
+  margin: 0.2rem 0;
+}
+
+/* Мобильная адаптация */
 @media (max-width: 480px) {
   .profile-page {
     padding: 1rem;
