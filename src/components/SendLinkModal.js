@@ -14,6 +14,7 @@ const SendLinkModal = ({ onClose, onSubmit }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+        <button className="modal-close-cross" onClick={onClose}>&times;</button>
         <h2>Отправка ссылки</h2>
         <input
           type="text"
@@ -24,7 +25,6 @@ const SendLinkModal = ({ onClose, onSubmit }) => {
         />
         <div className="modal-buttons">
           <button onClick={handleSubmit} className="modal-submit">Отправить</button>
-          <button onClick={onClose} className="modal-close">Закрыть</button>
         </div>
       </div>
     </div>
