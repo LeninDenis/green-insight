@@ -30,7 +30,7 @@
 .verification-icon {
   display: inline-block;
   margin-left: 8px;
-  color: var(--link-color);
+  color: var(--text-color);
   font-size: 1.2rem;
   vertical-align: middle;
 }
@@ -60,7 +60,7 @@
 }
 
 .articles-list a {
-  color: var(--link-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -122,6 +122,14 @@
   flex-wrap: wrap;
 }
 
+.tab-content{
+  background-color: var(--bg-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 .tab-content p {
   font-size: 1.1rem;
   margin: 0.5rem 0;
@@ -129,7 +137,7 @@
 }
 
 .tab-content a {
-  color: var(--link-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -201,6 +209,12 @@
 
 .subscription-card p {
   margin: 0.2rem 0;
+}
+
+.my-subs h3{
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 /* Мобильная адаптация */

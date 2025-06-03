@@ -3,8 +3,9 @@ import '../styles/pages/ModerationTab.css';
 import {toast} from "react-toastify";
 import ArticleService from "../api/ArticleService";
 import Loader from "./UI/Loader";
+import {X} from "lucide-react";
 
-const ModerationTab = ({userId, currentUserId}) => {
+const ModerationTab = ({userId, currentUserId, close}) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +55,7 @@ const ModerationTab = ({userId, currentUserId}) => {
   return (
     <div className="moderation-tab">
       <h2>Модерация статей</h2>
+      <button className="close-btn" onClick={close}><X/></button>
       {loading ? (<Loader />) : (
         articles.length === 0 ? (
               <p>Нет статей на модерации.</p>

@@ -1,8 +1,18 @@
 import {authAxios, baseAxios} from "./axiosInstance";
 
 export default class ArticleService{
-    static async getAllArticles(){
-        const response = await baseAxios.get('/platform/public/article');
+    static async getAllArticles(auth, sort, status, paid, creator, category, page, size){
+        const params = new URLSearchParams();
+        sort && params.append("sort", sort);
+        status && params.append("status", status);
+        paid && params.append("paid", paid);
+        creator && params.append("creator", creator);
+        category && params.append("category", category);
+        page && params.append("page", page);
+        size && params.append("size", size);
+        let response = auth
+            ? await authAxios.get(`/platform/protected/article?${params.toString()}`)
+            : await baseAxios.get(`/platform/public/article?${params.toString()}`);
         return response;
     }
 

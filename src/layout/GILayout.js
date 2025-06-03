@@ -45,7 +45,6 @@ function GILayout({ children, onLogin, onRegister }) {
 
                 <nav className="nav">
                     <Link to="/">{t('home')}</Link>
-                    <Link to="/themes">{t('themes')}</Link>
                     <Link to="/recommended">{t('recommended')}</Link>
                 </nav>
 

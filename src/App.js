@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import HomePage from './pages/HomePage';
-import ThemesPage from './pages/ThemesPage';
 import RecommendedPage from './pages/RecommendedPage';
 import AboutPage from './pages/AboutPage';
 import ContactsPage from './pages/ContactsPage';
@@ -38,7 +37,6 @@ const App = ()  => {
                 <main className="main-content">
                   <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/themes" element={<ThemesPage />} />
                     <Route path="/recommended" element={<RecommendedPage />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/contacts" element={<ContactsPage />} />

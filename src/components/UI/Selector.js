@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../styles/UI/Selector.css';
 
-const Selector = ({ options, defaultValue, value, onChange }) => {
+const Selector = ({ title, options, defaultValue, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -25,7 +25,7 @@ const Selector = ({ options, defaultValue, value, onChange }) => {
 
   return (
     <div className="topic-selector" ref={dropdownRef}>
-      <label>Тематика статьи</label>
+      <label>{title}</label>
       <div className="dropdown" onClick={() => setIsOpen((prev) => !prev)}>
         <div className="dropdown-selected">
           {selectedTopicName}
@@ -33,6 +33,14 @@ const Selector = ({ options, defaultValue, value, onChange }) => {
         </div>
         {isOpen && (
           <div className="dropdown-options">
+            <div
+                className="dropdown-option"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelect(null);
+                }}>
+              {defaultValue}
+            </div>
             {options.map((option) => (
               <div
                 key={option.id}

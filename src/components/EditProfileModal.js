@@ -4,7 +4,7 @@ import UserService from '../api/UserService';
 import { toast } from 'react-toastify';
 import Loader from "./UI/Loader";
 
-const EditProfileModal = ({ user, onClose }) => {
+const EditProfileModal = ({ user, onClose, refresh }) => {
   const [data, setData] = useState({
     fname: user.fname,
     lname: user.lname
@@ -38,6 +38,7 @@ const EditProfileModal = ({ user, onClose }) => {
       const res = await UserService.promote(user.id, "article.write");
       if (res.status === 200) {
         toast.success('Поздравляем! Теперь вы можете написать свою первую статью.');
+        await refresh();
         onClose();
       } else {
         toast.error(res.data?.message || "Ошибка при обновлении данных пользователя");

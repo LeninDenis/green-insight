@@ -1,0 +1,31 @@
+.subcard{
+    background: var(--bg-color);
+    border-radius: 30px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--text-color)
+}
+
+.subcard-dates{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.subcard-dates p{
+    margin-right: 10px;
+}
+
+.subcard-actions{
+    display: flex;
+    flex-direction: column;
+}
+
+.subcard-actions button{
+    margin-bottom: 0.5rem;
+}

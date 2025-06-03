@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { Star, ThumbsUp, Eye } from "lucide-react";
-import '../styles/pages/HomePage.css';
 import {useTheme} from "../context/ThemeContext";
 
 const ArticleCard = ({ article }) => {

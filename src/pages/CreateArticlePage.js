@@ -88,7 +88,7 @@ const CreateArticlePage = () => {
         placeholder="Введите заголовок"
       />
 
-      <Selector options={categories} defaultValue={'Выберите тему'} value={choose} onChange={setChoose} />
+      <Selector title={"Тематика статьи"} options={categories} defaultValue={'Все категории'} value={choose} onChange={setChoose} />
 
       <label>Аннотация</label>
       <textarea className='annotation-text'

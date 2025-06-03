@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/pages/ProfilePage.css';
 import defaultAvatar from '../assets/avatar/default-avatar.jpg';
-import SubscriptionsModal from '../components/SubscriptionsModal';
 import EditProfileModal from '../components/EditProfileModal';
 import SendLinkModal from '../components/SendLinkModal';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -13,6 +12,8 @@ import ModerationTab from '../components/ModerationTab';
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { FaCheckCircle } from 'react-icons/fa';
+import SubscriptionCard from "../components/SubscriptionCard";
+import PaymentService from "../api/PaymentService";
 
 const fetchProfileData = async (id, user) => {
   const response = await UserService.getUserById(id);
@@ -26,9 +27,22 @@ const fetchProfileData = async (id, user) => {
     arts = await ArticleService.getArticlesByUId(id);
   }
 
+  let subscriptions = [];
+  if(user && user.scopes.includes("payment.view")){
+    let res = await PaymentService.getActive();
+    if(res.status === 200){
+      subscriptions = res?.data ? [res.data] : [];
+    } else if(res.status === 404){
+      subscriptions = [];
+    }
+  } else if(user && user.role === "ADMIN" && user.id !== id){
+    let res = (await PaymentService.listAll(id));
+    subscriptions = res?.data ? res.data : [];
+  }
+
   if (arts.status !== 200 && arts.status !== 404) throw new Error('Ошибка загрузки статей');
 
-  return { currentUser: data, articles: arts.data };
+  return { currentUser: data, articles: arts.data, subs: subscriptions};
 };
 
 const VerifiedBadge = () => (
@@ -41,9 +55,8 @@ const VerifiedBadge = () => (
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, logged } = useAuth();
+  const { user, logged, refresh } = useAuth();
   const [likedArticles, setLikedArticles] = useState([]);
-  const [showSubscriptions, setShowSubscriptions] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [moderationOpen, setModerationOpen] = useState(false);
   const [showSendLinkModal, setShowSendLinkModal] = useState(false);
@@ -117,75 +130,54 @@ const ProfilePage = () => {
         )}
       </div>
 
-      {(data.currentUser?.role === 'AUTHOR' || data.currentUser?.role === 'ADMIN') && (
+      {isCurrentUser && (
+          <div className="profile-buttons">
+            {data.currentUser?.role === 'USER' && (
+                <>
+                  <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
+                    Оформить подписку
+                  </button>
+                </>
+            )}
+          </div>
+      )}
+
+      {(data.currentUser?.role === 'AUTHOR'
+          || data.currentUser?.role === 'ADMIN'
+          || data.currentUser?.scopes.includes("article.write")) && (
         <div className="author-section">
           <div className="tabs">
-            <button
-              className={activeTab === 'myArticles' ? 'active' : ''}
-              onClick={() => setActiveTab('myArticles')}
-            >
-              Мои статьи
-            </button>
-            <button
-              className={activeTab === 'likedArticles' ? 'active' : ''}
-              onClick={() => setActiveTab('likedArticles')}
-            >
-              Понравившиеся
-            </button>
+            <h3>Мои статьи</h3>
           </div>
 
           <div className="tab-content">
-            {activeTab === 'myArticles' ? (
-              data.articles?.length === 0 ? (
+            {data.articles?.length === 0 ? (
                 <p>У вас пока нет опубликованных статей.</p>
-              ) : (
-                data.articles.map((article) => (
-                  <p key={article.id}>
-                    <Link to={`/articles/${article.id}`}>{article.title}</Link>
-                  </p>
-                ))
-              )
             ) : (
-              likedArticles.length === 0 ? (
-                <p>Вы ещё не поставили лайк ни одной статье.</p>
-              ) : (
-                likedArticles.map((article) => (
-                  <p key={article.id}>
-                    <Link to={`/articles/${article.id}`}>{article.title}</Link>
-                  </p>
+                data.articles.map((article) => (
+                    <p key={article.id}>
+                      <Link to={`/articles/${article.id}`}>{article.title}</Link>
+                    </p>
                 ))
-              )
             )}
           </div>
         </div>
       )}
 
-      {isCurrentUser && (
-        <div className="profile-buttons">
-          {data.currentUser?.role === 'USER' && (
-            <>
-              <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
-                Оформить подписку
-              </button>
-              <button className="subscription-btn" onClick={() => setShowSubscriptions(true)}>
-                Мои подписки
-              </button>
-            </>
-          )}
-        </div>
-      )}
-
-      {showSubscriptions && (
-        <SubscriptionsModal
-          subscriptions={subscriptions}
-          onClose={() => setShowSubscriptions(false)}
-        />
+      {data.subs.length > 0 && (
+          <div className="my-subs">
+            <h3>Активные подписки</h3>
+            {data.subs.map((sub) => (
+                <SubscriptionCard subscription={sub} />
+            ))}
+          </div>
       )}
 
       {editModalOpen && (
         <EditProfileModal
           user={data.currentUser}
           onClose={() => setEditModalOpen(false)}
+          refresh={refresh}
         />
       )}
 
@@ -199,8 +191,10 @@ const ProfilePage = () => {
       {moderationOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={() => setModerationOpen(false)}>Закрыть</button>
-            <ModerationTab userId={user?.id} currentUserId={data.currentUser?.id} />
+            <ModerationTab
+                userId={user?.id}
+                currentUserId={data.currentUser?.id}
+                close={() => setModerationOpen(false)}/>
           </div>
         </div>
       )}

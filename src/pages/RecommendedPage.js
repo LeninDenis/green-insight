@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/pages/RecommendedPage.css';
+import '../styles/pages/HomePage.css';
 import ArticleCard from '../components/ArticleCard';
 import {useAuth} from "../context/AuthContext";
 import ArticleService from "../api/ArticleService";
@@ -43,7 +43,7 @@ const Recommended = () => {
   return !recommendedArticles || isLoading ? (<Loader />) : (
     <div className="recommended-page">
       <div className="section">
-        <h2>Рекомендуемые статьи</h2>
+        <h1>Рекомендуемые статьи</h1>
         <div className="articles-grid">
           {recommendedArticles.map((article) => (
             <ArticleCard key={article.id} article={article} />
