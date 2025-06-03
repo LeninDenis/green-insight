@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 import Selector from "../components/UI/Selector";
 import {useAuth} from "../context/AuthContext";
 import PaymentService from "../api/PaymentService";
+import {useTranslation} from "react-i18next";
 
 const fetchData = async (category, logged) => {
     let isPaid = false;
@@ -24,11 +25,11 @@ const fetchData = async (category, logged) => {
     ]);
 
     if (articlesResp.status !== 200) {
-        throw new Error(articlesResp.data?.message || "Ошибка при загрузке статей");
+        throw new Error(articlesResp.data?.message || "Error loading articles");
     }
 
     if (categoriesResp.status !== 200) {
-        throw new Error(categoriesResp.data?.message || "Ошибка при загрузке категорий");
+        throw new Error(categoriesResp.data?.message || "Error loading categories");
     }
 
     return {
@@ -38,58 +39,60 @@ const fetchData = async (category, logged) => {
 };
 
 const HomePage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [catFilter, setCatFilter] = useState(null);
-  const { logged } = useAuth();
-  const {data, isLoading, error} = useQuery({
-      queryKey: ['articles-n-categories', catFilter],
-      queryFn: () => fetchData(catFilter, logged),
-      enabled: logged !== null,
-      staleTime: Infinity,
-      cacheTime: 10 * 60 * 1000,
-      retry: 1
-  });
+    const [searchQuery, setSearchQuery] = useState('');
+    const [catFilter, setCatFilter] = useState(null);
+    const { logged } = useAuth();
+    const { t } = useTranslation();
 
-  useEffect(() => {
-      if(error){
-          toast.error(error.message || "Ошибка сервера, повторите позднее");
-      }
-  }, [error]);
+    const {data, isLoading, error} = useQuery({
+        queryKey: ['articles-n-categories', catFilter],
+        queryFn: () => fetchData(catFilter, logged),
+        enabled: logged !== null,
+        staleTime: Infinity,
+        cacheTime: 10 * 60 * 1000,
+        retry: 1
+    });
 
-  return (
-    <div className="gi-page">
-      <h1>Главная страница</h1>
-      
-      {/*<input*/}
-      {/*  type="text"*/}
-      {/*  placeholder="Поиск статей..."*/}
-      {/*  value={searchQuery}*/}
-      {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
-      {/*  className="search-input"*/}
-      {/*/>*/}
+    useEffect(() => {
+        if(error){
+            toast.error(error.message || t('errors.server'));
+        }
+    }, [error, t]);
 
-        {isLoading || logged === null ? (<Loader />) : (
-            <>
-                <div className="selector-inner">
-                    <Selector
-                        title={"Фильтр по категориям"}
-                        defaultValue="Все категории"
-                        options={data.categories}
-                        value={catFilter}
-                        onChange={setCatFilter}
-                    />
-                </div>
-                <div className="section">
-                    <div className="articles-grid">
-                        {data.articles.map((article) => (
-                            <ArticleCard key={article.id} article={article}/>
-                        ))}
+    return (
+        <div className="gi-page">
+            <h1>{t('homepage.title')}</h1>
+
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  placeholder="Поиск статей..."*/}
+            {/*  value={searchQuery}*/}
+            {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
+            {/*  className="search-input"*/}
+            {/*/>*/}
+
+            {isLoading || logged === null ? (<Loader />) : (
+                <>
+                    <div className="selector-inner">
+                        <Selector
+                            title={t('homepage.filter')}
+                            defaultValue={t('homepage.all_categories')}
+                            options={data.categories}
+                            value={catFilter}
+                            onChange={setCatFilter}
+                        />
                     </div>
-                </div>
-            </>
-        )}
-    </div>
-  );
+                    <div className="section">
+                        <div className="articles-grid">
+                            {data.articles.map((article) => (
+                                <ArticleCard key={article.id} article={article}/>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
+    );
 };
 
 export default HomePage;

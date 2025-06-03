@@ -6,26 +6,25 @@ import ArticleService from "../api/ArticleService";
 import Loader from "../components/UI/Loader";
 import {useQuery} from "@tanstack/react-query";
 import {toast} from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const fetchRecommended = async (logged) => {
-    if (logged) {
-        const recs = await ArticleService.getRecommendations();
-        if (recs.status !== 200) {
-            throw new Error(recs.data?.message || 'Ошибка при загрузке рекомендаций');
-        }
-        return recs.data;
-    } else {
-        const recs = await ArticleService.getAllArticles();
-        if (recs.status !== 200) {
-            throw new Error(recs.data?.message || 'Ошибка при загрузке статей');
-        }
-        return recs.data;
+    const res = logged
+        ? await ArticleService.getRecommendations()
+        : await ArticleService.getAllArticles();
+
+    if (res.status !== 200) {
+        throw new Error(res.data?.message || 'Error loading articles');
     }
+
+    return res.data;
 };
 
 const Recommended = () => {
-  const { logged } = useAuth();
-  const {data: recommendedArticles, isLoading, error} = useQuery({
+    const { logged } = useAuth();
+    const { t } = useTranslation();
+
+    const {data: recommendedArticles, isLoading, error} = useQuery({
         queryKey: ['recommend', logged],
         queryFn: () => fetchRecommended(logged),
         enabled: logged !== null,
@@ -34,24 +33,24 @@ const Recommended = () => {
         retry: 1
     });
 
-  useEffect(() => {
-      if(error){
-          toast.error(error.message || "Ошибка сервера, повторите попытку позднее");
-      }
-  }, [error]);
+    useEffect(() => {
+        if(error){
+            toast.error(error.message || t('errors.server'));
+        }
+    }, [error, t]);
 
-  return !recommendedArticles || isLoading ? (<Loader />) : (
-    <div className="recommended-page">
-      <div className="section">
-        <h1>Рекомендуемые статьи</h1>
-        <div className="articles-grid">
-          {recommendedArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
+    return !recommendedArticles || isLoading ? (<Loader />) : (
+        <div className="recommended-page">
+            <div className="section">
+                <h1>{t('recommend.title')}</h1>
+                <div className="articles-grid">
+                    {recommendedArticles.map((article) => (
+                        <ArticleCard key={article.id} article={article} />
+                    ))}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Recommended;

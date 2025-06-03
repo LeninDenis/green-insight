@@ -77,7 +77,6 @@ const ArticlePage = () => {
 
       const response = await ArticleService.interact(article.id, reqLike, view, ratings);
       if (response.status === 200) {
-        // Успешно
       } else {
         console.error(response);
         toast.error('Ошибка при отправке взаимодействия с статьей');

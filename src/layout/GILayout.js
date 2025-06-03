@@ -98,12 +98,12 @@ function GILayout({ children, onLogin, onRegister }) {
             <footer className={`footer ${isDarkMode ? 'dark' : ''}`}>
                 <div className="footer-content">
                     <div className="footer-copy">
-                        © {new Date().getFullYear()} Green Insight. Все права защищены.
+                        © {new Date().getFullYear()} Green Insight. {t('rights')}
                     </div>
                     <div className="footer-links">
-                        <a href="/about">О нас</a>
-                        <a href="/contacts">Контакты</a>
-                        <a href="/support">Поддержка</a>
+                        <a href="/about">{t('about_us')}</a>
+                        <a href="/contacts">{t('contacts')}</a>
+                        <a href="/support">{t('support')}</a>
                     </div>
                 </div>
             </footer>

@@ -1,11 +1,32 @@
 {
-    "home": "Home",
-    "themes": "Themes",
-    "trends": "Trends",
-    "recommended": "Recommended",
-    "news": "News",
-    "login": "Login",
-    "register": "Register",
-    "light_mode": "Light Mode",
-    "dark_mode": "Dark Mode"
+  "home": "Home",
+  "themes": "Themes",
+  "trends": "Trends",
+  "recommended": "Recommended",
+  "news": "News",
+  "login": "Login",
+  "register": "Register",
+  "light_mode": "Light Mode",
+  "dark_mode": "Dark Mode",
+  "profile": "Profile",
+  "logout": "Logout",
+  "rights": "All rights reserved.",
+  "about_us": "About Us",
+  "contacts": "Contacts",
+  "support": "Support",
+
+  "homepage": {
+    "title": "Popular Articles",
+    "filter": "Filter by Category",
+    "all_categories": "All Categories",
+    "search_placeholder": "Search articles..."
+  },
+
+  "recommend": {
+    "title": "Recommended Articles"
+  },
+
+  "errors": {
+    "server": "Error loading data from server"
+  }
 }
