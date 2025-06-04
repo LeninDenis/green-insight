@@ -38,7 +38,8 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const newAccessToken = response.data.access;
         localStorage.setItem('accessToken', newAccessToken);
-        localStorage.setItem('refreshToken', response.data.refresh)
+        localStorage.setItem('refreshToken', response.data.refresh);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         return newAccessToken;
       }
       return null;

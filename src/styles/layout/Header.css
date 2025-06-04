@@ -158,7 +158,6 @@
 
   .auth-buttons {
     justify-content: center;
-    flex-wrap: wrap;
   }
 
   .theme-toggle,

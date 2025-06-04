@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import React from "react";
-import { Star, ThumbsUp, Eye } from "lucide-react";
+import {Star, ThumbsUp, Eye, Coins} from "lucide-react";
 import {useTheme} from "../context/ThemeContext";
+import "../styles/components/ArticleCard.css";
 
 const ArticleCard = ({ article }) => {
   const { isDarkMode } = useTheme();
@@ -55,6 +56,12 @@ const ArticleCard = ({ article }) => {
         <Link to={`/articles/${article.id}`} className="read-more-btn">
           Читать далее
         </Link>
+          {article.paidStatus === "PAID" && (
+              <div className="is-sub">
+                  <Coins color="#EFC934"/>
+                  <span>По подписке</span>
+              </div>
+          )}
       </div>
     </div>
   );

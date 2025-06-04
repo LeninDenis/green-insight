@@ -48,7 +48,7 @@
 
 .reject-btn {
   background-color: var(--button-border);
-  color: var(--modal-text);
+  color: var(--button-text);
 }
 
 .approve-btn:hover {

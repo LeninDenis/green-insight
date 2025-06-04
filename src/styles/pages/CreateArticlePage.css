@@ -48,7 +48,15 @@
   }
   
   .publish-buttons .paid {
-    background-color: #c94f4f;
+    background-color: #5F5AE5;
+  }
+
+  .publish-buttons button:hover{
+    background-color: var(--button-hover-bg);
+  }
+
+  .publish-buttons .paid:hover {
+    background-color: #3A3794;
   }
   
   .publish-buttons button:disabled {

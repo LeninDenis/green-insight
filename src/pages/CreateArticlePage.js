@@ -7,9 +7,11 @@ import MDEditor from "@uiw/react-md-editor";
 import ArticleService from "../api/ArticleService";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import {useAuth} from "../context/AuthContext";
 
 const CreateArticlePage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [articleForm, setArticleForm] = useState({
     title: '',
     category: '',
@@ -21,7 +23,7 @@ const CreateArticlePage = () => {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const canPublishPaid = false;
+  const canPublishPaid = user?.role === "AUTHOR" || user?.role === "ADMIN";
 
   const fetchData = async () => {
     try {
@@ -54,13 +56,15 @@ const CreateArticlePage = () => {
       if (isPaid && !canPublishPaid) {
         toast.warn('Для платной публикации необходима специальная подписка.');
       } else {
+        let paid = canPublishPaid ? isPaid ? "PAID" : "FREE" : "FREE";
         if (!choose) {
           toast.error('Необходимо выбрать тему!');
         } else {
           const newArticle = {
             ...articleForm,
             category: choose.id,
-            content: content
+            content: content,
+            paidStatus: paid
           };
           const response = await ArticleService.create(newArticle);
           if (response.status === 201) {

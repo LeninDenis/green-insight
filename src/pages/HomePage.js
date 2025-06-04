@@ -17,12 +17,19 @@ const fetchData = async (category, logged) => {
         const sub = await PaymentService.getActive();
         if (sub.status === 200) isPaid = true;
     }
-    const [articlesResp, categoriesResp] = await Promise.all([
+    let [articlesResp, paidArticlesResp, categoriesResp] = await Promise.all([
         logged
-            ? ArticleService.getAllArticles(true, true, null, isPaid ? "PAID" : null, null, category ? category.id : null, null, null)
+            ? ArticleService.getAllArticles(true, true, null, isPaid ? "ALL" : null, null, category ? category.id : null, isPaid ? 1 : null, isPaid ? 6 : null)
             : ArticleService.getAllArticles(false, true, null, null, null, category ? category.id : null, null, null),
+        logged && isPaid
+            ? ArticleService.getAllArticles(true, true, null, "PAID", null, null, null, null)
+            : {status: 403, data: []},
         CategoryService.getCategories()
     ]);
+
+    if(paidArticlesResp.status !== 200){
+        paidArticlesResp = {data: []};
+    }
 
     if (articlesResp.status !== 200) {
         throw new Error(articlesResp.data?.message || "Error loading articles");
@@ -34,6 +41,7 @@ const fetchData = async (category, logged) => {
 
     return {
         articles: articlesResp.data,
+        paidArticles: paidArticlesResp.data,
         categories: categoriesResp.data
     };
 };
@@ -61,8 +69,6 @@ const HomePage = () => {
 
     return (
         <div className="gi-page">
-            <h1>{t('homepage.title')}</h1>
-
             {/*<input*/}
             {/*  type="text"*/}
             {/*  placeholder="Поиск статей..."*/}
@@ -73,22 +79,33 @@ const HomePage = () => {
 
             {isLoading || logged === null ? (<Loader />) : (
                 <>
-                    <div className="selector-inner">
-                        <Selector
-                            title={t('homepage.filter')}
-                            defaultValue={t('homepage.all_categories')}
-                            options={data.categories}
-                            value={catFilter}
-                            onChange={setCatFilter}
-                        />
-                    </div>
                     <div className="section">
+                        <h1>{t('homepage.title')}</h1>
+                        <div className="selector-inner">
+                            <Selector
+                                title={t('homepage.filter')}
+                                defaultValue={t('homepage.all_categories')}
+                                options={data.categories}
+                                value={catFilter}
+                                onChange={setCatFilter}
+                            />
+                        </div>
                         <div className="articles-grid">
                             {data.articles.map((article) => (
                                 <ArticleCard key={article.id} article={article}/>
                             ))}
                         </div>
                     </div>
+                    {data.paidArticles?.length > 0 && (
+                        <div className="section">
+                            <h1>Статьи по подписке</h1>
+                            <div className="articles-grid">
+                                {data.paidArticles.map((article) => (
+                                    <ArticleCard key={article.id} article={article}/>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </div>

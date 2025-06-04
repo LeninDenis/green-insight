@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/pages/ProfilePage.css';
 import defaultAvatar from '../assets/avatar/default-avatar.jpg';
 import EditProfileModal from '../components/EditProfileModal';
-import SendLinkModal from '../components/SendLinkModal';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import UserService from "../api/UserService";
 import ArticleService from "../api/ArticleService";
 import { useAuth } from "../context/AuthContext";
@@ -14,6 +13,8 @@ import { toast } from "react-toastify";
 import { FaCheckCircle } from 'react-icons/fa';
 import SubscriptionCard from "../components/SubscriptionCard";
 import PaymentService from "../api/PaymentService";
+import ArticleCard from "../components/ArticleCard";
+import RewardService from "../api/RewardService";
 
 const fetchProfileData = async (id, user) => {
   const response = await UserService.getUserById(id);
@@ -26,6 +27,16 @@ const fetchProfileData = async (id, user) => {
   } else {
     arts = await ArticleService.getArticlesByUId(id);
   }
+
+  let condition = user?.role === "ADMIN"
+      || (user?.role === "AUTHOR" && data.id === user?.id);
+  console.log(condition);
+
+  let reward = condition
+      ? await RewardService.getRewards(id)
+      : {status: 400};
+
+  if(reward.status !== 200) reward = {data: []};
 
   let subscriptions = [];
   if(user && user.scopes.includes("payment.view")){
@@ -42,25 +53,16 @@ const fetchProfileData = async (id, user) => {
 
   if (arts.status !== 200 && arts.status !== 404) throw new Error('Ошибка загрузки статей');
 
-  return { currentUser: data, articles: arts.data, subs: subscriptions};
+  return { currentUser: data, articles: arts.data, subs: subscriptions, reward: reward.data};
 };
-
-const VerifiedBadge = () => (
-  <span className="verified-icon-wrapper">
-    <FaCheckCircle className="verified-icon" />
-    <span className="verified-tooltip">Подтверждённый профиль</span>
-  </span>
-);
 
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, logged, refresh } = useAuth();
-  const [likedArticles, setLikedArticles] = useState([]);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [moderationOpen, setModerationOpen] = useState(false);
-  const [showSendLinkModal, setShowSendLinkModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('myArticles');
+  const [rew, setRew] = useState()
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['profile', id, user?.role],
@@ -79,20 +81,34 @@ const ProfilePage = () => {
     }
   }, [error]);
 
-  const isCurrentUser = user && data && user.id === data.currentUser.id;
-
-  const handleSendLink = async (link) => {
-    try {
-      const response = await UserService.sendDiskLink(link);
-      if (response.status === 200) {
-        toast.success('Ссылка успешно отправлена!');
-      } else {
-        toast.error('Не удалось отправить ссылку');
-      }
-    } catch (err) {
-      toast.error('Ошибка при отправке ссылки');
+  useEffect(() => {
+    if(editModalOpen || moderationOpen){
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
-  };
+
+    return () => {
+      document.body.style.overflow = '';
+    }
+  }, [editModalOpen, moderationOpen]);
+
+  const isCurrentUser = user && data && user.id === data.currentUser.id;
+  const totalReward = data && data.reward.length > 0
+      ? data.reward.reduce((sum, item) => sum + item.reward, 0)
+      : 0;
+
+  const handleCreateArticle = () => {
+    if(user?.scopes.includes("article.write") || user?.role === "ADMIN"){
+      navigate("/create-article");
+    } else {
+      toast.info("Для написания вашей первой статьи необходимо перейти в \"Редактировать профиль\" и нажать на кнопку \"Стать автором\"");
+    }
+  }
+
+  const handleReward = () => {
+    toast.info("Пока что деньги вывести нельзя, поскольку Stripe не разрешает такие операции в тестовом режиме.");
+  }
 
   return !data || isLoading ? (<Loader />) : (
     <div className="profile-page">
@@ -102,69 +118,53 @@ const ProfilePage = () => {
         <img src={defaultAvatar} alt="Аватар" className="profile-avatar" />
         <p>
           <strong>Имя:</strong> {data.currentUser?.fname || 'Имя'}
-          {data.currentUser?.is_verified && <VerifiedBadge />}
         </p>
         <p><strong>Фамилия:</strong> {data.currentUser?.lname || 'Фамилия'}</p>
         <p><strong>Статус:</strong> {data.currentUser?.role || "Пользователь"}</p>
 
         {isCurrentUser && (
           <div className="button-group">
-            <Link to="/create-article">
-              <button className="create-article-btn">Создать статью</button>
-            </Link>
+            <button className="create-article-btn" onClick={handleCreateArticle}>Создать статью</button>
 
             <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
               Редактировать профиль
             </button>
-
-            <button className="send-link-btn" onClick={() => setShowSendLinkModal(true)}>
-              Отправить ссылку
-            </button>
-
-            {data.currentUser?.role === 'ADMIN' && (
-              <button className="moderation-btn" onClick={() => setModerationOpen(true)}>
-                Модерация
-              </button>
-            )}
           </div>
         )}
       </div>
 
       {isCurrentUser && (
           <div className="profile-buttons">
-            {data.currentUser?.role === 'USER' && (
-                <>
-                  <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
-                    Оформить подписку
-                  </button>
-                </>
+            {data.currentUser?.role === 'ADMIN' && (
+                <button className="moderation-btn" onClick={() => setModerationOpen(true)}>
+                  Модерация
+                </button>
+            )}
+            {data.subs.length === 0 && data.currentUser?.role === 'USER' && (
+                <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
+                  Оформить подписку
+                </button>
             )}
           </div>
       )}
 
-      {(data.currentUser?.role === 'AUTHOR'
-          || data.currentUser?.role === 'ADMIN'
-          || data.currentUser?.scopes.includes("article.write")) && (
-        <div className="author-section">
-          <div className="tabs">
-            <h3>Мои статьи</h3>
-          </div>
-
-          <div className="tab-content">
-            {data.articles?.length === 0 ? (
-                <p>У вас пока нет опубликованных статей.</p>
-            ) : (
-                data.articles.map((article) => (
-                    <p key={article.id}>
-                      <Link to={`/articles/${article.id}`}>{article.title}</Link>
-                    </p>
-                ))
+      {(user?.role === "ADMIN"
+          || (user?.role === "AUTHOR" && data.currentUser?.id === user?.id)) && (
+          <div className="reward">
+            <h3>Вознаграждение</h3>
+            <div className="reward-info">
+              <span>На сегодняшний день заработок с платформы GreenInsight составил</span>
+              <span>${totalReward}</span>
+            </div>
+            {data.currentUser?.id === user?.id && (
+                <div className="reward-action">
+                  <button className="reward-btn" onClick={handleReward}>Получить</button>
+                </div>
             )}
           </div>
-        </div>
       )}
 
-      {data.subs.length > 0 && (
+      {(user?.id === data.currentUser?.id || user?.role === "ADMIN") && data.subs.length > 0 && (
           <div className="my-subs">
             <h3>Активные подписки</h3>
             {data.subs.map((sub) => (
@@ -173,24 +173,41 @@ const ProfilePage = () => {
           </div>
       )}
 
-      {editModalOpen && (
-        <EditProfileModal
-          user={data.currentUser}
-          onClose={() => setEditModalOpen(false)}
-          refresh={refresh}
-        />
+      {(data.currentUser?.role === 'AUTHOR'
+          || data.currentUser?.role === 'ADMIN'
+          || data.currentUser?.scopes.includes("article.write")) && (
+        <div className="author-section">
+          <div className="tabs">
+            <h3>{data.currentUser?.id === user?.id ? "Мои статьи" : "Статьи автора"}</h3>
+          </div>
+
+          <div className="tab-content">
+            {data.articles?.length === 0 ? (
+                <p>У вас пока нет опубликованных статей.</p>
+            ) : (
+                data.articles.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                ))
+            )}
+          </div>
+        </div>
       )}
 
-      {showSendLinkModal && (
-        <SendLinkModal
-          onClose={() => setShowSendLinkModal(false)}
-          onSubmit={handleSendLink}
-        />
+      {editModalOpen && (
+        <div className="modal-overlay" onClick={() => setEditModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <EditProfileModal
+                user={data.currentUser}
+                onClose={() => setEditModalOpen(false)}
+                refresh={refresh}
+            />
+          </div>
+        </div>
       )}
 
       {moderationOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setModerationOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <ModerationTab
                 userId={user?.id}
                 currentUserId={data.currentUser?.id}

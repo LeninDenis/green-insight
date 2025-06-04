@@ -1,0 +1,152 @@
+.article-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    width: calc(50% - 1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 300px;
+    word-break: break-word;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    background-color: var(--card-hover-bg);
+}
+
+.article-card-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.article-card h3,
+.article-card p {
+    margin: 0.5rem 0;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.article-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.article-category {
+    font-size: 1rem;
+    color: var(--footer-link-color);
+    margin-top: 0.5rem;
+}
+
+.article-date {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.article-annotation {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.article-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.article-card p:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.article-rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating-value {
+    margin-left: 6px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.article-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-with-text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-color);
+}
+
+.read-more-btn {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: var(--button-hover-bg);
+}
+
+.is-sub{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.is-sub span{
+    color: var(--text-color);
+    margin-left: 0.3rem;
+}
+
+@media (max-width: 768px) {
+    .article-card {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .article-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .read-more-btn {
+        width: fit-content;
+        max-width: 200px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+}

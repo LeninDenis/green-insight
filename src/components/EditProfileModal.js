@@ -68,14 +68,12 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
   };
 
   return (
-    <div className="modal-overlay">
+    <div className="edit-profile">
+      <button className="close-button" onClick={onClose} aria-label="Закрыть">
+        &times;
+      </button>
       {loading ? (<Loader />) : (
-        <div className="modal-wrapper">
-          <button className="close-button" onClick={onClose} aria-label="Закрыть">
-            &times;
-          </button>
-
-          <div className="modal">
+          <div className="edit-profile-inner">
             <h2>Редактировать профиль</h2>
 
             <div className="form-group">
@@ -88,19 +86,13 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
               <input name="lname" type="text" value={data.lname} onChange={handleDataEdit} />
             </div>
 
-            {user.role === 'USER' && user.scopes && !user.scopes.includes("article.write") && (
-              <button className="author-btn" onClick={handlePromote}>Стать автором</button>
-            )}
-
-            {!user.is_verified && (
-              <button className="author-btn" onClick={handleVerify}>Верифицировать аккаунт</button>
-            )}
-
-            <div className="modal-actions">
+            <div className="edit-profile-actions">
+              {user.role === 'USER' && user.scopes && !user.scopes.includes("article.write") && (
+                  <button className="author-btn" onClick={handlePromote}>Стать автором</button>
+              )}
               <button className="save-btn" onClick={handleSave}>Сохранить</button>
               <button className="cancel-btn" onClick={onClose}>Отмена</button>
             </div>
-          </div>
         </div>
       )}
     </div>

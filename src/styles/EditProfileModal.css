@@ -1,26 +1,10 @@
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.modal {
-  background: var(--modal-bg);
+.edit-profile {
   padding: 2rem;
-  border-radius: var(--radius-lg, 16px);
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  color: var(--modal-text);
+}
+
+.edit-profile-inner{
+  width: 90%;
+  margin: 0 auto;
 }
 
 .close-button {
@@ -43,7 +27,7 @@
 }
 
 .close-button:hover {
-  background-color: var(--hover-bg, #f3f3f3);
+  background-color: #f3f3f3;
 }
 
 .form-group {
@@ -60,7 +44,7 @@
 .form-group input {
   width: 93%;
   padding: 0.6rem 0.9rem;
-  border-radius: var(--radius-md, 8px);
+  border-radius: 8px;
   border: 1px solid var(--button-border);
   background-color: transparent;
   font-size: 1rem;
@@ -73,26 +57,28 @@
   border-color: var(--button-hover-bg);
 }
 
-.modal-actions {
+.edit-profile-actions {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
   margin-top: 0.1rem;
+  align-items: center;
 }
 
 .save-btn,
 .cancel-btn,
 .author-btn {
   padding: 0.6rem 1.2rem;
+  margin-bottom: 0.3rem;
   border: var(--button-border);
-  border-radius: var(--radius-md, 8px);
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   font-size: 1rem;
   background-color: var(--button-bg);
   color: var(--button-text);
   transition: background-color 0.2s ease, color 0.2s ease;
-  width: 100%;
+  width: 70%;
 }
 
 .save-btn:hover,
