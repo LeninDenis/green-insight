@@ -28,5 +28,96 @@
 
   "errors": {
     "server": "Серверден деректерді жүктеу қатесі"
+  },
+
+  "login_form": {
+  "email": "Email",
+  "password": "Құпия сөз",
+  "submit": "Кіру"
+  },
+
+  "register_form": {
+  "fname": "Аты",
+  "fname_placeholder": "Атыңызды енгізіңіз",
+  "lname": "Тегі",
+  "lname_placeholder": "Тегіңізді енгізіңіз",
+  "email": "Email",
+  "email_placeholder": "Email енгізіңіз",
+  "password": "Құпия сөз",
+  "password_placeholder": "Құпия сөзді енгізіңіз",
+  "submit": "Тіркелу"
+  },
+
+  "profile_profile": {
+    "edit_profile": "Профильді өңдеу",
+    "subscription": "Жазылым",
+    "moderation": "Модерация",
+    "reward_total": "Жалпы сыйақы:",
+    "articles_user": "Пайдаланушының мақалалары",
+    "no_articles": "Әзірге жарияланған мақалалар жоқ",
+    "moderation_admin": "Модерация (Әкімші)",
+    "subscriptions_list": "Жазылымдар тізімі",
+    "edit_button": "Өңдеу",
+    "close_button": "Жабу",
+    "role": "Лауазымы",
+    "articles": "Мақалалар",
+    "create_article": "Мақала жасау"
+  },
+  "error": {
+    "profile_loading": "Профиль деректерін жүктеу мүмкін болмады.",
+    "articles_loading": "Мақалаларды жүктеу сәтсіз аяқталды.",
+    "server": "Серверде қате орын алды."
+  },
+
+  "moderation": {
+    "title": "Мақалаларды модерациялау",
+    "noArticles": "Модерациялауға мақала жоқ.",
+    "author": "Авторы",
+    "approve": "Қабылдау",
+    "reject": "Қабылдамау",
+    "successApprove": "Мақала қабылданды!",
+    "successReject": "Мақала қабылданбады!",
+    "errorModerating": "Мақаланы модерациялау кезінде қате шықты",
+    "errorFetching": "Модерацияға мақалаларды алу кезінде қате шықты",
+    "serverError": "Сервер қатесі, кейінірек қайталап көріңіз"
+  },
+
+  "create": {
+    "title": "Мақала жасау",
+    "article_title": "Мақала атауы",
+    "article_title_placeholder": "Атауын енгізіңіз",
+    "category": "Мақала тақырыбы",
+    "all_categories": "Барлық тақырыптар",
+    "annotation": "Аннотация",
+    "annotation_placeholder": "Мақаланың қысқаша сипаттамасы",
+    "content": "Мақала мазмұны",
+    "publish": "Жариялау",
+    "paid_publish": "Ақылы жариялау",
+    "subscription_required": "Жазылымсыз қолжетімсіз",
+    "paid_publish_warning": "Ақылы жариялау үшін арнайы жазылым қажет.",
+    "error_choose_category": "Тақырыпты таңдаңыз!",
+    "error_publishing": "Мақаланы жариялау кезінде қате",
+    "success": "Мақала сәтті жарияланды",
+    "error_loading_categories": "Санаттарды жүктеу қатесі"
+  },
+  "common": {
+    "unknown_error": "Белгісіз қате..."
+  },
+
+  "edit_profile": {
+    "title": "Профильді өңдеу",
+    "first_name": "Аты",
+    "last_name": "Тегі",
+    "save": "Сақтау",
+    "cancel": "Болдырмау",
+    "close": "Жабу",
+    "success": "Профиль сәтті жаңартылды",
+    "update_error": "Пайдаланушы деректерін жаңарту қатесі",
+    "verify_success": "Аккаунт сәтті расталды",
+    "verify_error": "Аккаунтты растау қатесі",
+    "promote_success": "Құттықтаймыз! Енді өзіңіздің алғашқы мақалаңызды жаза аласыз.",
+    "become_author": "Автор болу",
+    "server_error": "Сервер қатесі, кейінірек қайталап көріңіз"
   }
+
 }

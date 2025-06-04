@@ -63,6 +63,10 @@
   padding: 0.4rem 0.9rem;
   font-size: 0.9rem;
   transition: background-color 0.3s;
+  white-space: nowrap;
+  max-width: fit-content;
+  min-width: 80px;
+  text-align: center;
 }
 
 .auth-buttons button:hover,

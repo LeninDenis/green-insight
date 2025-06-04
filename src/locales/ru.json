@@ -28,5 +28,101 @@
 
   "errors": {
     "server": "Ошибка загрузки данных с сервера"
+  },
+
+  "login_form": {
+  "email": "Email",
+  "password": "Пароль",
+  "submit": "Войти"
+  },
+
+  "register_form": {
+  "fname": "Имя",
+  "fname_placeholder": "Введите ваше имя",
+  "lname": "Фамилия",
+  "lname_placeholder": "Введите вашу фамилию",
+  "email": "Email",
+  "email_placeholder": "Введите ваш email",
+  "password": "Пароль",
+  "password_placeholder": "Введите ваш пароль",
+  "submit": "Зарегистрироваться"
+  },
+
+  "profile_profile": {
+    "edit_profile": "Редактировать профиль",
+    "subscription": "Подписка",
+    "moderation": "Модерация",
+    "reward_total": "Общее вознаграждение:",
+    "articles_user": "Статьи пользователя",
+    "no_articles": "Пока нет опубликованных статей",
+    "moderation_admin": "Модерация (Админ)",
+    "subscriptions_list": "Список подписок",
+    "edit_button": "Редактировать",
+    "close_button": "Закрыть",
+    "role": "Роль",
+    "articles": "Статьи",
+    "create_article": "Создать статью"
+  },
+  "error": {
+    "profile_loading": "Не удалось загрузить данные профиля.",
+    "articles_loading": "Не удалось загрузить статьи.",
+    "server": "Произошла ошибка на сервере."
+  },
+
+  "roles": {
+    "ADMIN": "Администратор",
+    "AUTHOR": "Автор",
+    "USER": "Пользователь"
+  },
+
+  "moderation": {
+    "title": "Модерация статей",
+    "author": "Автор",
+    "approveBtn": "Одобрить",
+    "rejectBtn": "Отклонить",
+    "approved": "Статья одобрена!",
+    "rejected": "Статья отклонена!",
+    "errorFetch": "Ошибка при получении статей для модерации",
+    "errorModerate": "Ошибка при модерировании статьи",
+    "serverError": "Ошибка сервера, повторите попытку позднее",
+    "noArticles": "Нет статей на модерации."
+  },
+
+  "create": {
+    "title": "Создание статьи",
+    "article_title": "Название статьи",
+    "article_title_placeholder": "Введите заголовок",
+    "category": "Тематика статьи",
+    "all_categories": "Все категории",
+    "annotation": "Аннотация",
+    "annotation_placeholder": "Краткое описание статьи",
+    "content": "Контент статьи",
+    "publish": "Публикация",
+    "paid_publish": "Платная публикация",
+    "subscription_required": "Недоступно без подписки",
+    "paid_publish_warning": "Для платной публикации необходима специальная подписка.",
+    "error_choose_category": "Необходимо выбрать тему!",
+    "error_publishing": "Ошибка публикации статьи",
+    "success": "Статья успешно опубликована",
+    "error_loading_categories": "Ошибка загрузки категорий"
+  },
+  "common": {
+    "unknown_error": "Неизвестная ошибка..."
+  },
+
+  "edit_profile": {
+    "title": "Редактировать профиль",
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "close": "Закрыть",
+    "success": "Профиль успешно обновлён",
+    "update_error": "Ошибка при обновлении данных пользователя",
+    "verify_success": "Аккаунт успешно верифицирован",
+    "verify_error": "Ошибка верификации аккаунта",
+    "promote_success": "Поздравляем! Теперь вы можете написать свою первую статью.",
+    "become_author": "Стать автором",
+    "server_error": "Ошибка сервера, повторите попытку позже"
   }
 }

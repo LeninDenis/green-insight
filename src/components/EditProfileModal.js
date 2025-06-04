@@ -3,8 +3,10 @@ import '../styles/EditProfileModal.css';
 import UserService from '../api/UserService';
 import { toast } from 'react-toastify';
 import Loader from "./UI/Loader";
+import { useTranslation } from 'react-i18next';
 
 const EditProfileModal = ({ user, onClose, refresh }) => {
+  const { t } = useTranslation();
   const [data, setData] = useState({
     fname: user.fname,
     lname: user.lname
@@ -20,13 +22,13 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
     try {
       const res = await UserService.update(user.id, data);
       if (res.status === 200) {
-        toast.success('Профиль успешно обновлён');
+        toast.success(t('edit_profile.success'));
         onClose();
       } else {
-        toast.error(res.data?.message || "Ошибка при обновлении данных пользователя");
+        toast.error(res.data?.message || t('edit_profile.update_error'));
       }
     } catch (e) {
-      toast.error('Ошибка сервера, повторите попытку позже');
+      toast.error(t('common.server_error'));
     } finally {
       setLoading(false);
     }
@@ -37,14 +39,14 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
     try {
       const res = await UserService.promote(user.id, "article.write");
       if (res.status === 200) {
-        toast.success('Поздравляем! Теперь вы можете написать свою первую статью.');
+        toast.success(t('edit_profile.promote_success'));
         await refresh();
         onClose();
       } else {
-        toast.error(res.data?.message || "Ошибка при обновлении данных пользователя");
+        toast.error(res.data?.message || t('edit_profile.update_error'));
       }
     } catch (e) {
-      toast.error('Ошибка сервера, повторите попытку позже');
+      toast.error(t('common.server_error'));
     } finally {
       setLoading(false);
     }
@@ -55,13 +57,13 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
     try {
       const res = await UserService.verify(user.id);
       if (res.status === 200) {
-        toast.success('Аккаунт успешно верифицирован');
+        toast.success(t('edit_profile.verify_success'));
         onClose();
       } else {
-        toast.error(res.data?.message || "Ошибка верификации аккаунта");
+        toast.error(res.data?.message || t('edit_profile.verify_error'));
       }
     } catch (e) {
-      toast.error('Ошибка сервера, повторите попытку позже');
+      toast.error(t('common_1.server_error'));
     } finally {
       setLoading(false);
     }
@@ -69,30 +71,30 @@ const EditProfileModal = ({ user, onClose, refresh }) => {
 
   return (
     <div className="edit-profile">
-      <button className="close-button" onClick={onClose} aria-label="Закрыть">
+      <button className="close-button" onClick={onClose} aria-label={t('edit_profile.close')}>
         &times;
       </button>
       {loading ? (<Loader />) : (
-          <div className="edit-profile-inner">
-            <h2>Редактировать профиль</h2>
+        <div className="edit-profile-inner">
+          <h2>{t('edit_profile.title')}</h2>
 
-            <div className="form-group">
-              <label>Имя</label>
-              <input name="fname" type="text" value={data.fname} onChange={handleDataEdit} />
-            </div>
+          <div className="form-group">
+            <label>{t('edit_profile.first_name')}</label>
+            <input name="fname" type="text" value={data.fname} onChange={handleDataEdit} />
+          </div>
 
-            <div className="form-group">
-              <label>Фамилия</label>
-              <input name="lname" type="text" value={data.lname} onChange={handleDataEdit} />
-            </div>
+          <div className="form-group">
+            <label>{t('edit_profile.last_name')}</label>
+            <input name="lname" type="text" value={data.lname} onChange={handleDataEdit} />
+          </div>
 
-            <div className="edit-profile-actions">
-              {user.role === 'USER' && user.scopes && !user.scopes.includes("article.write") && (
-                  <button className="author-btn" onClick={handlePromote}>Стать автором</button>
-              )}
-              <button className="save-btn" onClick={handleSave}>Сохранить</button>
-              <button className="cancel-btn" onClick={onClose}>Отмена</button>
-            </div>
+          <div className="edit-profile-actions">
+            {user.role === 'USER' && user.scopes && !user.scopes.includes("article.write") && (
+              <button className="author-btn" onClick={handlePromote}>{t('edit_profile.become_author')}</button>
+            )}
+            <button className="save-btn" onClick={handleSave}>{t('edit_profile.save')}</button>
+            <button className="cancel-btn" onClick={onClose}>{t('edit_profile.cancel')}</button>
+          </div>
         </div>
       )}
     </div>

@@ -28,5 +28,96 @@
 
   "errors": {
     "server": "Error loading data from server"
+  },
+
+  "login_form": {
+  "email": "Email",
+  "password": "Password",
+  "submit": "Login"
+  },
+
+  "register_form": {
+  "fname": "First Name",
+  "fname_placeholder": "Enter your first name",
+  "lname": "Last Name",
+  "lname_placeholder": "Enter your last name",
+  "email": "Email",
+  "email_placeholder": "Enter your email",
+  "password": "Password",
+  "password_placeholder": "Enter your password",
+  "submit": "Register"
+  },
+
+  "profile_profile": {
+    "edit_profile": "Edit Profile",
+    "subscription": "Subscription",
+    "moderation": "Moderation",
+    "reward_total": "Total Reward:",
+    "articles_user": "User's Articles",
+    "no_articles": "No articles published yet",
+    "moderation_admin": "Moderation (Admin)",
+    "subscriptions_list": "Subscriptions",
+    "edit_button": "Edit",
+    "close_button": "Close",
+    "role": "Role",
+    "articles": "Articles",
+    "create_article": "Create Article"
+  },
+  "error": {
+    "profile_loading": "Failed to load profile data.",
+    "articles_loading": "Failed to load articles.",
+    "server": "A server error occurred."
+  },
+
+  "moderation": {
+    "title": "Article Moderation",
+    "noArticles": "No articles awaiting moderation.",
+    "author": "Author",
+    "approve": "Approve",
+    "reject": "Reject",
+    "successApprove": "Article approved!",
+    "successReject": "Article rejected!",
+    "errorModerating": "Error while moderating the article",
+    "errorFetching": "Error fetching articles for moderation",
+    "serverError": "Server error, please try again later"
+  },
+
+  "create": {
+    "title": "Create Article",
+    "article_title": "Article Title",
+    "article_title_placeholder": "Enter a title",
+    "category": "Article Category",
+    "all_categories": "All categories",
+    "annotation": "Annotation",
+    "annotation_placeholder": "Short description of the article",
+    "content": "Article Content",
+    "publish": "Publish",
+    "paid_publish": "Paid Publication",
+    "subscription_required": "Not available without subscription",
+    "paid_publish_warning": "A special subscription is required for paid publication.",
+    "error_choose_category": "Please select a category!",
+    "error_publishing": "Error publishing article",
+    "success": "Article successfully published",
+    "error_loading_categories": "Failed to load categories"
+  },
+  "common": {
+    "unknown_error": "Unknown error..."
+  },
+
+  "edit_profile": {
+    "title": "Edit Profile",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "success": "Profile successfully updated",
+    "update_error": "Error updating user data",
+    "verify_success": "Account successfully verified",
+    "verify_error": "Account verification error",
+    "promote_success": "Congratulations! Now you can write your first article.",
+    "become_author": "Become an Author",
+    "server_error": "Server error, please try again later"
   }
+
 }

@@ -7,9 +7,11 @@ import MDEditor from "@uiw/react-md-editor";
 import ArticleService from "../api/ArticleService";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import {useAuth} from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const CreateArticlePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const [articleForm, setArticleForm] = useState({
@@ -31,10 +33,10 @@ const CreateArticlePage = () => {
       if (cats.status === 200) {
         setCategories(cats.data);
       } else {
-        toast.error(cats.data.message || 'Ошибка загрузки категорий');
+        toast.error(cats.data.message || t('create.error_loading_categories'));
       }
     } catch (e) {
-      toast.error('Неизвестная ошибка...');
+      toast.error(t('common.unknown_error'));
     } finally {
       setLoading(false);
     }
@@ -54,11 +56,11 @@ const CreateArticlePage = () => {
   const handleSubmit = async (isPaid) => {
     try {
       if (isPaid && !canPublishPaid) {
-        toast.warn('Для платной публикации необходима специальная подписка.');
+        toast.warn(t('create.paid_publish_warning'));
       } else {
         let paid = canPublishPaid ? isPaid ? "PAID" : "FREE" : "FREE";
         if (!choose) {
-          toast.error('Необходимо выбрать тему!');
+          toast.error(t('create.error_choose_category'));
         } else {
           const newArticle = {
             ...articleForm,
@@ -68,52 +70,61 @@ const CreateArticlePage = () => {
           };
           const response = await ArticleService.create(newArticle);
           if (response.status === 201) {
-            toast.success('Статья успешно опубликована');
+            toast.success(t('create.success'));
             navigate("/");
           } else {
-            toast.error(response.data.message || 'Ошибка публикации статьи');
+            toast.error(response.data.message || t('create.error_publishing'));
           }
         }
       }
     } catch (e) {
-      toast.error('Неизвестная ошибка...');
+      toast.error(t('common.unknown_error'));
     }
   };
 
   return loading ? (<Loader />) : (
     <div className="publish-form">
-      <h2>Создание статьи</h2>
+      <h2>{t('create.title')}</h2>
 
-      <label>Название статьи</label>
+      <label>{t('create.article_title')}</label>
       <input
         type="text"
         value={articleForm.title}
         onChange={(e) => handleForm('title', e.target.value)}
-        placeholder="Введите заголовок"
+        placeholder={t('create.article_title_placeholder')}
       />
 
-      <Selector title={"Тематика статьи"} options={categories} defaultValue={'Все категории'} value={choose} onChange={setChoose} />
+      <Selector
+        title={t('create.category')}
+        options={categories}
+        defaultValue={t('create.all_categories')}
+        value={choose}
+        onChange={setChoose}
+      />
 
-      <label>Аннотация</label>
-      <textarea className='annotation-text'
+      <label>{t('create.annotation')}</label>
+      <textarea
+        className='annotation-text'
         value={articleForm.annotation}
         onChange={(e) => handleForm('annotation', e.target.value)}
-        placeholder="Краткое описание статьи"
+        placeholder={t('create.annotation_placeholder')}
         rows={3}
       />
 
-      <label>Контент статьи</label>
+      <label>{t('create.content')}</label>
       <MDEditor value={content} onChange={setContent} />
 
       <div className="publish-buttons">
-        <button onClick={() => handleSubmit(false)}>Публикация</button>
+        <button onClick={() => handleSubmit(false)}>
+          {t('create.publish')}
+        </button>
         <button
           className="paid"
           onClick={() => handleSubmit(true)}
           disabled={!canPublishPaid}
-          title={!canPublishPaid ? 'Недоступно без подписки' : ''}
+          title={!canPublishPaid ? t('create.subscription_required') : ''}
         >
-          Платная публикация
+          {t('create.paid_publish')}
         </button>
       </div>
     </div>
