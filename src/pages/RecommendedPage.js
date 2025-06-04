@@ -13,7 +13,7 @@ const fetchRecommended = async (logged) => {
     let res = logged
         ? await ArticleService.getRecommendations()
         : await ArticleService.getAllArticles(false, true, null, null, null, null, null, null);
-    if(res.status !== 200) {
+    if(res.status !== 200 || res.data.length === 0) {
         let isPaid = false;
         if (logged) {
             const sub = await PaymentService.getActive();

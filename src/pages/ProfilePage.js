@@ -28,7 +28,7 @@ const fetchProfileData = async (id, user) => {
     arts = await ArticleService.getArticlesByUId(id);
   }
 
-  let condition = user?.role === "ADMIN"
+  let condition = (user?.role === "ADMIN" && data.role === "AUTHOR")
       || (user?.role === "AUTHOR" && data.id === user?.id);
   console.log(condition);
 
@@ -148,7 +148,7 @@ const ProfilePage = () => {
           </div>
       )}
 
-      {(user?.role === "ADMIN"
+      {((user?.role === "ADMIN" && data.currentUser?.role === "AUTHOR")
           || (user?.role === "AUTHOR" && data.currentUser?.id === user?.id)) && (
           <div className="reward">
             <h3>Вознаграждение</h3>
@@ -156,7 +156,7 @@ const ProfilePage = () => {
               <span>На сегодняшний день заработок с платформы GreenInsight составил</span>
               <span>${totalReward}</span>
             </div>
-            {data.currentUser?.id === user?.id && (
+            {data.currentUser?.id === user?.id && user?.role === "AUTHOR" && (
                 <div className="reward-action">
                   <button className="reward-btn" onClick={handleReward}>Получить</button>
                 </div>
@@ -183,7 +183,7 @@ const ProfilePage = () => {
 
           <div className="tab-content">
             {data.articles?.length === 0 ? (
-                <p>У вас пока нет опубликованных статей.</p>
+                <p>Пока нет опубликованных статей.</p>
             ) : (
                 data.articles.map((article) => (
                     <ArticleCard key={article.id} article={article} />
