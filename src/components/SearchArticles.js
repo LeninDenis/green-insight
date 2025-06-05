@@ -38,11 +38,14 @@ const SearchArticles = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-input"
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter') handleSearch();
+                    }}
                 />
             </div>
             {showRes && (
                 <div className="search-res">
-                    <ul className="search-articles">
+                    <div className="search-articles">
                         {articles?.length > 0 ? (
                             articles.map((article) => (
                                 <li key={article.id}>
@@ -52,7 +55,7 @@ const SearchArticles = () => {
                         ) : (
                             <p>Ничего не найдено...</p>
                         )}
-                    </ul>
+                    </div>
                     <X className="search-cross" onClick={() => setShowRes(false)}/>
                 </div>
             )}
