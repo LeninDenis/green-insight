@@ -22,6 +22,11 @@
     "search_placeholder": "Search articles..."
   },
 
+  "pagination": {
+  "prev": "Previous",
+  "next": "Next"
+  },
+
   "recommend": {
     "title": "Recommended Articles"
   },
@@ -121,6 +126,40 @@
     "promote_success": "Congratulations! Now you can write your first article.",
     "become_author": "Become an Author",
     "server_error": "Server error, please try again later"
+  },
+
+  "about": {
+    "title": "About Us",
+    "description1": "is an online aggregator of popular science articles on ecology, created to spread reliable information about the state of the environment and ways to preserve it.",
+    "description2": "We collect materials from verified sources, categorize them by topic, and offer both free and paid access to exclusive content for interested readers.",
+    "description3": "Our mission is to increase public ecological literacy, inspire conscious attitudes toward nature, and support scientific initiatives in ecology."
+  },
+
+  "contacts_page": {
+    "title": "Contacts",
+    "subtitle": "If you have any questions or suggestions, please contact us using the form below:",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Enter your name",
+    "emailLabel": "Your email",
+    "emailPlaceholder": "Enter your email",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Enter your message",
+    "submit": "Submit",
+    "addressLabel": "Address",
+    "address": "Zharokov St. 123, office 45, Almaty",
+    "phoneLabel": "Phone"
+  },
+
+  "support_page": {
+    "title": "Support",
+    "intro": "If you have any questions or issues, don’t hesitate to contact us.",
+    "email": "You can email us at:",
+    "form": "Or fill out the form on our website.",
+    "faqTitle": "Frequently Asked Questions:",
+    "faq1": "How can I subscribe to the paid access?",
+    "faq2": "How do I cancel my subscription?",
+    "faq3": "How can I update my profile?",
+    "faq4": "How do I report a bug on the site?"
   }
 
 }

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/pages/ContactsPage.css';
+import { useTranslation } from 'react-i18next';
 
 const Contacts = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,12 +23,12 @@ const Contacts = () => {
 
   return (
     <div className="contacts-page">
-      <h1>Контакты</h1>
-      <p>Если у вас есть вопросы или предложения, свяжитесь с нами через форму ниже:</p>
+      <h1>{t('contacts_page.title')}</h1>
+      <p>{t('contacts_page.subtitle')}</p>
 
       <form onSubmit={handleSubmit} className="contacts-form">
         <div className="form-group">
-          <label htmlFor="name">Ваше имя</label>
+          <label htmlFor="name">{t('contacts_page.nameLabel')}</label>
           <input
             type="text"
             name="name"
@@ -33,12 +36,12 @@ const Contacts = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            placeholder="Введите ваше имя"
+            placeholder={t('contacts_page.namePlaceholder')}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Ваш email</label>
+          <label htmlFor="email">{t('contacts_page.emailLabel')}</label>
           <input
             type="email"
             name="email"
@@ -46,28 +49,28 @@ const Contacts = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            placeholder="Введите ваш email"
+            placeholder={t('contacts_page.emailPlaceholder')}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="message">Сообщение</label>
+          <label htmlFor="message">{t('contacts_page.messageLabel')}</label>
           <textarea
             name="message"
             id="message"
             value={formData.message}
             onChange={handleChange}
             required
-            placeholder="Введите ваше сообщение"
+            placeholder={t('contacts_page.messagePlaceholder')}
           />
         </div>
 
-        <button type="submit" className="submit-btn">Отправить</button>
+        <button type="submit" className="submit-btn">{t('contacts_page.submit')}</button>
       </form>
 
       <div className="contact-info">
-        <p><strong>Адрес:</strong> ул. Жарокова, 123, офис 45, Алматы</p>
-        <p><strong>Телефон:</strong> +7 777 123 45 67</p>
+        <p><strong>{t('contacts_page.addressLabel')}:</strong> {t('contacts_page.address')}</p>
+        <p><strong>{t('contacts_page.phoneLabel')}:</strong> +7 777 123 45 67</p>
         <p><strong>Email:</strong> contact@greeninsight.kz</p>
         <p><strong>Support Email:</strong> support@greeninsight.com</p>
       </div>

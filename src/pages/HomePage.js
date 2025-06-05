@@ -51,6 +51,8 @@ const HomePage = () => {
     const [catFilter, setCatFilter] = useState(null);
     const { logged } = useAuth();
     const { t } = useTranslation();
+    const [currentPage, setCurrentPage] = useState(1);
+    const articlesPerPage = 10;
 
     const {data, isLoading, error} = useQuery({
         queryKey: ['articles-n-categories', catFilter],
@@ -67,39 +69,73 @@ const HomePage = () => {
         }
     }, [error, t]);
 
+    if (isLoading || logged === null) {
+        return <Loader />;
+    }
+
+    const totalPages = Math.ceil(data.articles.length / articlesPerPage);
+    const paginatedArticles = data.articles.slice(
+        (currentPage - 1) * articlesPerPage,
+        currentPage * articlesPerPage
+    );
+
     return (
         <div className="gi-page">
             <SearchArticles />
-            {isLoading || logged === null ? (<Loader />) : (
-                <>
-                    <div className="section">
-                        <h1>{t('homepage.title')}</h1>
-                        <div className="selector-inner">
-                            <Selector
-                                title={t('homepage.filter')}
-                                defaultValue={t('homepage.all_categories')}
-                                options={data.categories}
-                                value={catFilter}
-                                onChange={setCatFilter}
-                            />
-                        </div>
-                        <div className="articles-grid">
-                            {data.articles.map((article) => (
-                                <ArticleCard key={article.id} article={article}/>
-                            ))}
-                        </div>
+            <div className="section">
+                <h1>{t('homepage.title')}</h1>
+                <div className="selector-inner">
+                    <Selector
+                        title={t('homepage.filter')}
+                        defaultValue={t('homepage.all_categories')}
+                        options={data.categories}
+                        value={catFilter}
+                        onChange={(val) => {
+                            setCatFilter(val);
+                            setCurrentPage(1);
+                        }}
+                    />
+                </div>
+                <div className="articles-grid">
+                    {paginatedArticles.map((article) => (
+                        <ArticleCard key={article.id} article={article} />
+                    ))}
+                </div>
+                {totalPages > 1 && (
+                    <div className="pagination">
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            {t('pagination.prev')}
+                        </button>
+                        {Array.from({ length: totalPages }, (_, i) => (
+                            <button
+                                key={i + 1}
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={currentPage === i + 1 ? 'active' : ''}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            {t('pagination.next')}
+                        </button>
                     </div>
-                    {data.paidArticles?.length > 0 && (
-                        <div className="section">
-                            <h1>Статьи по подписке</h1>
-                            <div className="articles-grid">
-                                {data.paidArticles.map((article) => (
-                                    <ArticleCard key={article.id} article={article}/>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </>
+                )}
+            </div>
+            {data.paidArticles?.length > 0 && (
+                <div className="section">
+                    <h1>{t('homepage.paid_articles')}</h1>
+                    <div className="articles-grid">
+                        {data.paidArticles.map((article) => (
+                            <ArticleCard key={article.id} article={article} />
+                        ))}
+                    </div>
+                </div>
             )}
         </div>
     );
