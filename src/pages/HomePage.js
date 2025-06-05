@@ -10,6 +10,7 @@ import Selector from "../components/UI/Selector";
 import {useAuth} from "../context/AuthContext";
 import PaymentService from "../api/PaymentService";
 import {useTranslation} from "react-i18next";
+import SearchArticles from "../components/SearchArticles";
 
 const fetchData = async (category, logged) => {
     let isPaid = false;
@@ -47,7 +48,6 @@ const fetchData = async (category, logged) => {
 };
 
 const HomePage = () => {
-    const [searchQuery, setSearchQuery] = useState('');
     const [catFilter, setCatFilter] = useState(null);
     const { logged } = useAuth();
     const { t } = useTranslation();
@@ -69,14 +69,7 @@ const HomePage = () => {
 
     return (
         <div className="gi-page">
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  placeholder="Поиск статей..."*/}
-            {/*  value={searchQuery}*/}
-            {/*  onChange={(e) => setSearchQuery(e.target.value)}*/}
-            {/*  className="search-input"*/}
-            {/*/>*/}
-
+            <SearchArticles />
             {isLoading || logged === null ? (<Loader />) : (
                 <>
                     <div className="section">

@@ -16,6 +16,15 @@ export default class ArticleService{
         return response;
     }
 
+    static async search(auth, query){
+        const params = new URLSearchParams();
+        params.append("query", query);
+        let response = auth
+            ? await authAxios.get(`/platform/protected/article/search?${params.toString()}`)
+            : await authAxios.get(`/platform/public/article/search?${params.toString()}`);
+        return response;
+    }
+
     static async getArticleById(id){
         const response = await baseAxios.get('/platform/public/article/'+id);
         return response;

@@ -20,6 +20,7 @@ function GILayout({ children, onLogin, onRegister }) {
 
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
+        localStorage.setItem("lang", lang);
         setLanguageMenuOpen(false);
     };
 

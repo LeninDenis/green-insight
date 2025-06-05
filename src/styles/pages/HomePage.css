@@ -11,19 +11,6 @@
   width: 100%;
 }
 
-.search-input {
-  width: 50%;
-  margin: 0 auto 2rem;
-  display: block;
-  border-radius: 25px;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  background-color: var(--card-bg);
-  border: 2px solid #000000; 
-  color: var(--text-color);
-  outline: none;
-}
-
 .section{
   width: 100%;
   display: flex;

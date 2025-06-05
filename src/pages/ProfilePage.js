@@ -10,11 +10,11 @@ import Loader from "../components/UI/Loader";
 import ModerationTab from '../components/ModerationTab';
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { FaCheckCircle } from 'react-icons/fa';
 import SubscriptionCard from "../components/SubscriptionCard";
 import PaymentService from "../api/PaymentService";
 import ArticleCard from "../components/ArticleCard";
 import RewardService from "../api/RewardService";
+import {useTranslation} from "react-i18next";
 
 const fetchProfileData = async (id, user) => {
   const response = await UserService.getUserById(id);
@@ -59,10 +59,10 @@ const fetchProfileData = async (id, user) => {
 const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const {t} = useTranslation();
   const { user, logged, refresh } = useAuth();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [moderationOpen, setModerationOpen] = useState(false);
-  const [rew, setRew] = useState()
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['profile', id, user?.role],
@@ -72,8 +72,6 @@ const ProfilePage = () => {
     cacheTime: 10 * 60 * 1000,
     retry: 1,
   });
-
-  const subscriptions = ['Standard'];
 
   useEffect(() => {
     if (error) {
@@ -112,22 +110,24 @@ const ProfilePage = () => {
 
   return !data || isLoading ? (<Loader />) : (
     <div className="profile-page">
-      <h2>Профиль</h2>
+      <h2>{t('profile')}</h2>
 
       <div className="profile-info">
         <img src={defaultAvatar} alt="Аватар" className="profile-avatar" />
         <p>
-          <strong>Имя:</strong> {data.currentUser?.fname || 'Имя'}
+          <strong>{t('register_form.fname')}:</strong> {data.currentUser?.fname || 'Имя'}
         </p>
-        <p><strong>Фамилия:</strong> {data.currentUser?.lname || 'Фамилия'}</p>
-        <p><strong>Статус:</strong> {data.currentUser?.role || "Пользователь"}</p>
+        <p><strong>{t('register_form.lname')}:</strong> {data.currentUser?.lname || 'Фамилия'}</p>
+        <p><strong>{data.currentUser?.role || "Пользователь"}</strong></p>
 
         {isCurrentUser && (
           <div className="button-group">
-            <button className="create-article-btn" onClick={handleCreateArticle}>Создать статью</button>
+            <button className="create-article-btn" onClick={handleCreateArticle}>
+              {t('profile_profile.create_article')}
+            </button>
 
             <button className="edit-btn" onClick={() => setEditModalOpen(true)}>
-              Редактировать профиль
+              {t('profile_profile.edit_profile')}
             </button>
           </div>
         )}
@@ -137,12 +137,12 @@ const ProfilePage = () => {
           <div className="profile-buttons">
             {data.currentUser?.role === 'ADMIN' && (
                 <button className="moderation-btn" onClick={() => setModerationOpen(true)}>
-                  Модерация
+                  {t('profile_profile.moderation')}
                 </button>
             )}
             {data.subs.length === 0 && data.currentUser?.role === 'USER' && (
                 <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
-                  Оформить подписку
+                  {t('profile_profile.subscribe')}
                 </button>
             )}
           </div>
@@ -151,9 +151,9 @@ const ProfilePage = () => {
       {((user?.role === "ADMIN" && data.currentUser?.role === "AUTHOR")
           || (user?.role === "AUTHOR" && data.currentUser?.id === user?.id)) && (
           <div className="reward">
-            <h3>Вознаграждение</h3>
+            <h3>{t('profile_profile.reward_total')}</h3>
             <div className="reward-info">
-              <span>На сегодняшний день заработок с платформы GreenInsight составил</span>
+              <span>{t('profile_profile.reward_description')}</span>
               <span>${totalReward}</span>
             </div>
             {data.currentUser?.id === user?.id && user?.role === "AUTHOR" && (
@@ -166,7 +166,7 @@ const ProfilePage = () => {
 
       {(user?.id === data.currentUser?.id || user?.role === "ADMIN") && data.subs.length > 0 && (
           <div className="my-subs">
-            <h3>Активные подписки</h3>
+            <h3>{t('profile_profile.subscriptions_list')}</h3>
             {data.subs.map((sub) => (
                 <SubscriptionCard subscription={sub} />
             ))}
@@ -178,12 +178,12 @@ const ProfilePage = () => {
           || data.currentUser?.scopes.includes("article.write")) && (
         <div className="author-section">
           <div className="tabs">
-            <h3>{data.currentUser?.id === user?.id ? "Мои статьи" : "Статьи автора"}</h3>
+            <h3>{data.currentUser?.id === user?.id ? t('profile_profile.articles_my') : t('profile_profile.articles_user')}</h3>
           </div>
 
           <div className="tab-content">
             {data.articles?.length === 0 ? (
-                <p>Пока нет опубликованных статей.</p>
+                <p>{t('profile_profile.no_articles')}</p>
             ) : (
                 data.articles.map((article) => (
                     <ArticleCard key={article.id} article={article} />

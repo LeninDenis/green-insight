@@ -4,7 +4,7 @@ import ArticleService from '../api/ArticleService';
 import Loader from '../components/UI/Loader';
 import { useAuth } from '../context/AuthContext';
 import '../styles/pages/ArticlePage.css';
-import { Eye, ThumbsUp } from 'lucide-react';
+import {Coins, Eye, ThumbsUp} from 'lucide-react';
 import MDEditor from "@uiw/react-md-editor";
 import ReactStars from "react-rating-stars-component";
 import { toast } from 'react-toastify';
@@ -149,6 +149,12 @@ const ArticlePage = () => {
   return (
     <div className="article-page">
       <h1>{article.title}</h1>
+      {article.paidStatus === "PAID" && (
+          <div className="is-sub">
+            <Coins color="#EFC934"/>
+            <span>По подписке</span>
+          </div>
+      )}
       <p className="annotation">{article.annotation}</p>
       <p className="author">Автор: {article.creator.fname} {article.creator.lname}</p>
 
