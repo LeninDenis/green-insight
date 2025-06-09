@@ -20,7 +20,7 @@ const fetchData = async (category, logged) => {
     }
     let [articlesResp, paidArticlesResp, categoriesResp] = await Promise.all([
         logged
-            ? ArticleService.getAllArticles(true, true, null, isPaid ? "ALL" : null, null, category ? category.id : null, isPaid ? 1 : null, isPaid ? 6 : null)
+            ? ArticleService.getAllArticles(true, true, null, isPaid ? "ALL" : null, null, category ? category.id : null, null, null)
             : ArticleService.getAllArticles(false, true, null, null, null, category ? category.id : null, null, null),
         logged && isPaid
             ? ArticleService.getAllArticles(true, true, null, "PAID", null, null, null, null)
@@ -69,17 +69,7 @@ const HomePage = () => {
         }
     }, [error, t]);
 
-    if (isLoading || logged === null) {
-        return <Loader />;
-    }
-
-    const totalPages = Math.ceil(data.articles.length / articlesPerPage);
-    const paginatedArticles = data.articles.slice(
-        (currentPage - 1) * articlesPerPage,
-        currentPage * articlesPerPage
-    );
-
-    return (
+    return isLoading || logged === null ? (<Loader />) : (
         <div className="gi-page">
             <SearchArticles />
             <div className="section">
@@ -97,35 +87,10 @@ const HomePage = () => {
                     />
                 </div>
                 <div className="articles-grid">
-                    {paginatedArticles.map((article) => (
+                    {data.articles.map((article) => (
                         <ArticleCard key={article.id} article={article} />
                     ))}
                 </div>
-                {totalPages > 1 && (
-                    <div className="pagination">
-                        <button
-                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                        >
-                            {t('pagination.prev')}
-                        </button>
-                        {Array.from({ length: totalPages }, (_, i) => (
-                            <button
-                                key={i + 1}
-                                onClick={() => setCurrentPage(i + 1)}
-                                className={currentPage === i + 1 ? 'active' : ''}
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
-                        <button
-                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                        >
-                            {t('pagination.next')}
-                        </button>
-                    </div>
-                )}
             </div>
             {data.paidArticles?.length > 0 && (
                 <div className="section">

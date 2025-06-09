@@ -22,7 +22,7 @@ const fetchProfileData = async (id, user) => {
 
   const data = response.data;
   let arts;
-  if (user && user.role === 'ADMIN') {
+  if (user || user.role === 'ADMIN') {
     arts = await ArticleService.getArticlesByUIdProtected(id);
   } else {
     arts = await ArticleService.getArticlesByUId(id);
@@ -140,7 +140,7 @@ const ProfilePage = () => {
                   {t('profile_profile.moderation')}
                 </button>
             )}
-            {data.subs.length === 0 && data.currentUser?.role === 'USER' && (
+            {data.subs.length === 0 && (
                 <button className="subscription-btn" onClick={() => navigate('/subscribe')}>
                   {t('profile_profile.subscribe')}
                 </button>
